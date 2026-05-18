@@ -1,0 +1,14 @@
+# Test screenshots and headless-browser captures (not for public repo)
+*.png
+!images/*.png
+*.log
+*.tmp
+dump.html
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/

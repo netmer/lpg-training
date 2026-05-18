@@ -1,0 +1,214 @@
+/* ============================================================
+   LPG VIRTUAL SITE VISIT — Single-page 16:9 PowerPoint embed
+   Header (slim) + Stage (fills viewport)
+============================================================ */
+
+:root{
+  --bg-0:#050810;
+  --bg-1:#0a1322;
+  --bg-2:#13203a;
+  --line:#1f2c46;
+  --line-2:#2a3a5f;
+  --ink:#eef3fb;
+  --ink-2:#c4d0e3;
+  --muted:#7d92b8;
+  --accent:#ffb347;
+  --accent-2:#ff7a45;
+  --accent-3:#ffd166;
+  --hot:#ff3d57;
+  --hot-d:#a0252f;
+  --liquid:#5ac8fa;
+  --liquid-2:#1a6ca8;
+  --liquid-d:#0a3a66;
+  --vapor:#c4dfff;
+  --good:#3ddc84;
+  --warn:#ffd166;
+  --steel:#a8b3c8;
+  --steel-d:#5a6577;
+  --steel-l:#dde3ee;
+}
+
+*{box-sizing:border-box}
+html,body{
+  margin:0;padding:0;color:var(--ink);
+  font-family:"Sarabun","Leelawadee UI","Noto Sans Thai","Tahoma",system-ui,sans-serif;
+  background:radial-gradient(1600px 900px at 50% -20%, #1a2848 0%, #050810 70%);
+  width:100%;height:100%;overflow:hidden;
+}
+body{display:flex;flex-direction:column;height:100vh}
+
+/* ============================================================
+   HEADER — slim, single row
+============================================================ */
+.ppt-header{
+  flex:0 0 auto;
+  background:rgba(5,8,16,.86);
+  border-bottom:1px solid var(--line);
+  padding:8px 16px;
+}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-mark{
+  width:36px;height:36px;border-radius:8px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  display:grid;place-items:center;color:#1a0f00;font-weight:800;font-size:17px;
+  box-shadow:0 4px 14px rgba(255,122,69,.35);
+  flex:0 0 36px;
+}
+.title-block{flex:1;min-width:0}
+.ppt-header h1{font-size:15px;margin:0;letter-spacing:.2px;font-weight:700;line-height:1.2}
+.ppt-header .sub{color:var(--muted);font-size:11px;margin-top:1px}
+
+.toolbar{display:flex;gap:5px;flex:0 0 auto;align-items:center}
+.icon-btn{
+  background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--ink);
+  padding:5px 10px;border-radius:6px;cursor:pointer;font-family:inherit;
+  font-size:12px;font-weight:600;display:inline-flex;align-items:center;gap:4px;
+  transition:all .15s;line-height:1;
+}
+.icon-btn:hover{background:rgba(255,179,71,.14);border-color:var(--accent);color:var(--accent)}
+.icon-btn.on{background:rgba(255,61,87,.20);border-color:var(--hot);color:var(--hot)}
+
+/* ============================================================
+   MAIN STAGE — fills remaining viewport
+============================================================ */
+.ppt-main{
+  flex:1 1 auto;
+  display:flex;
+  min-height:0;       /* allow shrink */
+  padding:8px 12px 10px;
+}
+.scene{
+  flex:1 1 auto;
+  display:none;
+  min-height:0;
+}
+.scene.active{display:flex;flex-direction:column}
+.stage{
+  position:relative;flex:1 1 auto;
+  border:1px solid var(--line);
+  background:linear-gradient(180deg,#0b1424 0%,#050810 100%);
+  border-radius:12px;overflow:hidden;
+  box-shadow:0 20px 50px -20px rgba(0,0,0,.7), inset 0 1px 0 rgba(255,255,255,.05);
+  min-height:0;
+}
+.stage svg{
+  display:block;width:100%;height:100%;
+  /* Let svg fill the stage; preserveAspectRatio=xMidYMid meet keeps proportions */
+}
+
+/* ============================================================
+   SVG LABEL DEFAULTS — sized for projector + PPT legibility
+   All text on dark backgrounds uses high-contrast --ink (near-white)
+============================================================ */
+.label{font-family:"Sarabun","Leelawadee UI",sans-serif;font-size:20px;fill:var(--ink);font-weight:700;letter-spacing:.2px;
+       paint-order:stroke;stroke:rgba(0,0,0,.5);stroke-width:3px;stroke-linejoin:round}
+.label-sm{font-family:"Sarabun","Leelawadee UI",sans-serif;font-size:16px;fill:var(--ink);font-weight:600;
+          paint-order:stroke;stroke:rgba(0,0,0,.45);stroke-width:2.5px;stroke-linejoin:round}
+.label-num{font-family:"Consolas",monospace;font-size:14px;fill:var(--accent);font-weight:700;letter-spacing:.5px;
+           paint-order:stroke;stroke:rgba(0,0,0,.5);stroke-width:2.5px;stroke-linejoin:round}
+.label-tag{font-family:"Sarabun",sans-serif;font-size:12px;fill:#1a0f00;font-weight:700}
+
+/* ============================================================
+   ANIMATIONS — utilities
+============================================================ */
+@keyframes spin360{to{transform:rotate(360deg)}}
+/* transform-box:fill-box is CRITICAL — without it, transform-origin:center uses the SVG viewBox
+   center (800,420) instead of the element's own bbox center, causing carousel/pump to "orbit"
+   off into the sky. This bug only appears in some browsers (Chrome/Edge) without the explicit box. */
+.spin-pump    {transform-box:fill-box;transform-origin:center;animation:spin360 .8s linear infinite}
+.spin-comp    {transform-box:fill-box;transform-origin:center;animation:spin360 .6s linear infinite}
+.spin-fan     {transform-box:fill-box;transform-origin:center;animation:spin360 2s  linear infinite}
+.spin-carousel{transform-box:fill-box;transform-origin:center;animation:spin360 12s linear infinite}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+.pulse{animation:pulse 1.4s ease-in-out infinite}
+
+@keyframes blink{50%{opacity:.2}}
+.blink{animation:blink 0.6s steps(2) infinite}
+
+@keyframes beaconPulse{0%,90%,100%{opacity:.25}5%{opacity:1}10%{opacity:.5}15%{opacity:1}}
+.beacon{animation:beaconPulse 2s ease-in-out infinite}
+
+@keyframes flow-dash{to{stroke-dashoffset:-300}}
+.flow      {stroke-dasharray:14 10;animation:flow-dash 1.4s linear infinite}
+.flow-slow {stroke-dasharray:14 10;animation:flow-dash 2.4s linear infinite}
+.flow-rev  {stroke-dasharray:14 10;animation:flow-dash 1.6s linear infinite reverse}
+.flow-vapor{stroke-dasharray:6  12;animation:flow-dash 2s   linear infinite}
+
+@keyframes cloud-drift{from{transform:translateX(-220px)}to{transform:translateX(2200px)}}
+.cloud-a{animation:cloud-drift 60s linear infinite}
+.cloud-b{animation:cloud-drift 95s linear infinite}
+.cloud-c{animation:cloud-drift 140s linear infinite}
+
+@keyframes sway{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+.sway      {transform-origin:0 0;animation:sway 4s ease-in-out infinite}
+
+/* When body has .paused, pause all CSS animations (SMIL handled separately via pauseAnimations) */
+body.paused *{animation-play-state:paused !important}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* Focus styles */
+.icon-btn:focus-visible,
+[role="button"]:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Equipment hover ring (interactive zones) */
+.hot-zone{cursor:pointer}
+.hot-zone .hover-ring{opacity:0;transition:opacity .2s}
+.hot-zone:hover .hover-ring{opacity:.85}
+
+/* ============================================================
+   INFO PANEL — slides in from right
+============================================================ */
+.info-panel{
+  position:absolute;top:12px;right:12px;width:280px;
+  background:rgba(8,14,28,.96);backdrop-filter:blur(10px);
+  border:1px solid var(--accent);border-radius:12px;padding:14px 16px;
+  transform:translateX(310px);opacity:0;
+  transition:all .3s ease;z-index:15;
+  font-size:13px;
+}
+.info-panel.show{transform:translateX(0);opacity:1}
+.info-panel h3{margin:0 0 4px;font-size:15px;color:var(--accent);font-weight:700}
+.info-panel .role{display:inline-block;padding:2px 8px;border-radius:999px;
+  background:rgba(90,200,250,.12);color:var(--liquid);font-size:10px;font-weight:600;
+  margin-bottom:6px;font-family:"Consolas",monospace}
+.info-panel p{margin:0 0 8px;font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.info-panel .photo-mini{
+  width:100%;height:110px;border-radius:6px;background-size:cover;background-position:center;
+  margin-top:4px;border:1px solid var(--line);
+}
+.info-panel .close{
+  position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:5px;
+  background:rgba(255,255,255,.06);border:1px solid var(--line);color:var(--ink);
+  cursor:pointer;display:grid;place-items:center;font-size:13px;line-height:1;
+}
+
+/* ============================================================
+   TIME-OF-DAY CONTROL (bottom-right corner of stage)
+============================================================ */
+.time-control{
+  position:absolute;left:12px;bottom:12px;
+  background:rgba(8,14,28,.88);backdrop-filter:blur(8px);
+  border:1px solid var(--line);border-radius:8px;padding:6px 10px;
+  font-size:11.5px;color:var(--muted);
+  display:flex;align-items:center;gap:8px;
+  z-index:12;
+}
+.time-control .clock{
+  font-family:"Consolas",monospace;font-size:13px;color:var(--accent);font-weight:700;
+  min-width:54px;
+}
+.time-control .phase{
+  font-weight:600;color:var(--ink);min-width:170px;
+}
+
+/* ============================================================
+   FULL-SCREEN PRESENTATION MODE
+============================================================ */
+body.presenting .ppt-header{display:none}
+body.presenting .ppt-main{padding:0}
+body.presenting .stage{border-radius:0;border:none}

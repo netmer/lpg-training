@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Animation สถานีโรงบรรจุก๊าซ LPG</title>
+<style>
+  @font-face{font-family:'ThaiUI';src:local('Sarabun'),local('Leelawadee UI'),local('Tahoma');font-display:swap}
+</style>
+<link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+<!-- Top bar (slim) -->
+<header class="ppt-header">
+  <div class="brand">
+    <div class="brand-mark">⛽</div>
+    <div class="title-block">
+      <h1>Animation • สถานีโรงบรรจุก๊าซ LPG</h1>
+    </div>
+    <div class="toolbar">
+      <button class="icon-btn" id="ovPause"      title="หยุด / เล่น (Space)">⏸</button>
+      <button class="icon-btn" id="ovVapor"      title="แสดงไอ LPG หนักกว่าอากาศ">💨 ไอ</button>
+      <button class="icon-btn" id="ovFire"       title="จำลองไฟไหม้ + Deluge">🔥 ไฟ</button>
+      <button class="icon-btn" id="btnFullscreen" title="เต็มจอ (F)">⛶</button>
+    </div>
+  </div>
+</header>
+
+<!-- Main stage (fills viewport) -->
+<main class="ppt-main">
+  <section class="scene active" data-scene="overview">
+    <div class="stage"><!-- populated by scene1.js --></div>
+  </section>
+</main>
+
+<!-- Scripts -->
+<script src="./js/app.js"></script>
+<script src="./js/scene1.js"></script>
+
+</body>
+</html>
