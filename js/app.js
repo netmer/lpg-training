@@ -23,7 +23,7 @@ document.getElementById('btnFullscreen')?.addEventListener('click', () => {
 // ============================================================
 // VIEW SWITCHING — overview / step1..step5
 // ============================================================
-const VIEWS = ['overview','step1','step2','step3','step4','step5'];
+const VIEWS = ['overview','step1','step2','step3','step4','step5','step6','step7'];
 let currentView = 'overview';
 
 function setView(viewId){
@@ -85,9 +85,9 @@ document.addEventListener('keydown', e => {
     e.preventDefault(); return;
   }
 
-  // Number keys 0-5 jump to specific view
+  // Number keys 0-7 jump to specific view
   if (k === '0'){ setView('overview'); e.preventDefault(); return; }
-  if (k >= '1' && k <= '5'){
+  if (k >= '1' && k <= '7'){
     setView('step' + k);
     e.preventDefault(); return;
   }

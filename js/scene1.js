@@ -1413,27 +1413,7 @@
   btnPause.addEventListener('click', togglePause);
 
   // ============================================================
-  // VAPOR + FIRE DEMOS
-  // ============================================================
-  const btnVapor = $('ovVapor');
-  const btnFire  = $('ovFire');
-  const vaporG   = $('ovVaporCloud');
-  const fireG    = $('ovFireScene');
-  let vaporOn = false, fireOn = false;
-
-  btnVapor.addEventListener('click', () => {
-    vaporOn = !vaporOn;
-    vaporG.setAttribute('opacity', vaporOn ? '1' : '0');
-    btnVapor.classList.toggle('on', vaporOn);
-  });
-  btnFire.addEventListener('click', () => {
-    fireOn = !fireOn;
-    fireG.setAttribute('opacity', fireOn ? '1' : '0');
-    btnFire.classList.toggle('on', fireOn);
-  });
-
-  // ============================================================
-  // SCENE HOOKS
+  // SCENE HOOKS (vapor + fire button handlers removed — buttons no longer in UI)
   // ============================================================
   window.LPG.registerScene('overview', {
     onEnter(){ if (!rafId && pausedAt === null) update(); },
@@ -1444,7 +1424,6 @@
     onKey(e){
       if (e.key === 'Escape' && panel.classList.contains('show')){ closePanel(); return true; }
       if (e.key === ' ' || e.key === 'p' || e.key === 'P'){ togglePause(); return true; }
-      if (e.key === 'v' || e.key === 'V'){ btnVapor.click(); return true; }
       return false;
     }
   });
