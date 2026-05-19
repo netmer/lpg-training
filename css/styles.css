@@ -69,12 +69,38 @@ body{display:flex;flex-direction:column;height:100vh}
 .icon-btn.on{background:rgba(255,61,87,.20);border-color:var(--hot);color:var(--hot)}
 
 /* ============================================================
+   STEP NAVIGATION BAR (second row of header)
+============================================================ */
+.step-nav{
+  display:flex;align-items:center;gap:5px;flex-wrap:wrap;
+  padding:6px 16px 8px;
+  background:rgba(8,14,28,.78);
+  border-bottom:1px solid var(--line);
+}
+.step-tab{
+  border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);
+  padding:6px 12px;border-radius:8px;cursor:pointer;font-family:inherit;
+  font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:4px;
+  transition:all .15s;line-height:1;white-space:nowrap;
+}
+.step-tab:hover{background:rgba(255,179,71,.12);border-color:var(--accent);color:var(--accent)}
+.step-tab.active{
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  color:#1a0f00;border-color:transparent;
+  box-shadow:0 4px 12px rgba(255,122,69,.30);
+}
+.step-tab.overview-tab{background:rgba(90,200,250,.12);border-color:rgba(90,200,250,.4);color:var(--liquid)}
+.step-tab.overview-tab.active{background:linear-gradient(135deg,#5ac8fa,#1a6ca8);color:#fff}
+.step-nav .arrows{display:flex;gap:5px;margin-left:auto}
+.step-nav .sep{color:var(--muted);margin:0 2px}
+
+/* ============================================================
    MAIN STAGE — fills remaining viewport
 ============================================================ */
 .ppt-main{
   flex:1 1 auto;
   display:flex;
-  min-height:0;       /* allow shrink */
+  min-height:0;
   padding:8px 12px 10px;
 }
 .scene{
@@ -82,7 +108,16 @@ body{display:flex;flex-direction:column;height:100vh}
   display:none;
   min-height:0;
 }
-.scene.active{display:flex;flex-direction:column}
+.scene.active{display:flex;flex-direction:column;position:relative}
+
+/* Step view containers — only one visible at a time */
+.step-view{
+  flex:1 1 auto;
+  display:none;
+  min-height:0;
+}
+.step-view.active{display:flex;flex-direction:column;animation:fadeIn .3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
 .stage{
   position:relative;flex:1 1 auto;
   border:1px solid var(--line);

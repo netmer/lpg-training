@@ -25,18 +25,53 @@
       <button class="icon-btn" id="btnFullscreen" title="เต็มจอ (F)">⛶</button>
     </div>
   </div>
+
+  <!-- Step navigation bar: Overview + 5 detail steps + Prev/Next -->
+  <nav class="step-nav" id="stepNav">
+    <button class="step-tab overview-tab active" data-view="overview">📍 ภาพรวม</button>
+    <span class="sep">›</span>
+    <button class="step-tab" data-view="step1">1. ตรวจสภาพถัง</button>
+    <button class="step-tab" data-view="step2">2. ชั่งน้ำหนักเปล่า</button>
+    <button class="step-tab" data-view="step3">3. อัด LPG</button>
+    <button class="step-tab" data-view="step4">4. ชั่งหลังบรรจุ</button>
+    <button class="step-tab" data-view="step5">5. ทดสอบรั่วซึม</button>
+    <div class="arrows">
+      <button class="icon-btn" id="btnPrev" title="ก่อนหน้า (←)">◀ ก่อนหน้า</button>
+      <button class="icon-btn" id="btnNext" title="ถัดไป (→)">ถัดไป ▶</button>
+    </div>
+  </nav>
 </header>
 
-<!-- Main stage (fills viewport) -->
+<!-- Main stage (fills viewport) — 6 views: overview + 5 close-up steps -->
 <main class="ppt-main">
   <section class="scene active" data-scene="overview">
-    <div class="stage"><!-- populated by scene1.js --></div>
+    <!-- View 0: Overview (built by scene1.js) -->
+    <div class="step-view active" data-view="overview">
+      <div class="stage" id="stageOverview"><!-- populated by scene1.js --></div>
+    </div>
+    <!-- View 1-5: Close-up steps (built by steps.js) -->
+    <div class="step-view" data-view="step1">
+      <div class="stage" id="stageStep1"></div>
+    </div>
+    <div class="step-view" data-view="step2">
+      <div class="stage" id="stageStep2"></div>
+    </div>
+    <div class="step-view" data-view="step3">
+      <div class="stage" id="stageStep3"></div>
+    </div>
+    <div class="step-view" data-view="step4">
+      <div class="stage" id="stageStep4"></div>
+    </div>
+    <div class="step-view" data-view="step5">
+      <div class="stage" id="stageStep5"></div>
+    </div>
   </section>
 </main>
 
 <!-- Scripts -->
 <script src="./js/app.js"></script>
 <script src="./js/scene1.js"></script>
+<script src="./js/steps.js"></script>
 
 </body>
 </html>
