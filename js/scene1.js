@@ -53,12 +53,6 @@
       desc:'แท่นหมุน 8-24 หัวบรรจุ แต่ละหัวมีตาชั่ง load cell คุมการตัดวาล์วอัตโนมัติเมื่อถึงน้ำหนัก ความสามารถ 600-1500 ถัง/ชั่วโมง',
       img:'./images/carousel.jpg'
     },
-    leak: {
-      title:'ตู้ตรวจรอยรั่ว (Leak Detector)',
-      role:'QUALITY',
-      desc:'ตู้ปิดที่มีเซ็นเซอร์ก๊าซตรวจที่ 3 จุด: O-ring คอวาล์ว / บ่าวาล์ว (valve seat) / รอยเชื่อมตัวถัง ตรวจได้ระดับ 100 ppm ภายใน 3 วินาที',
-      img:'./images/detector.jpg'
-    },
     warehouse: {
       title:'โกดังเก็บถังบรรจุแล้ว',
       role:'DISPATCH',
@@ -206,10 +200,44 @@
           <feComponentTransfer><feFuncA type="linear" slope="0.45"/></feComponentTransfer>
           <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <!-- Chain-link fence mesh pattern -->
-        <pattern id="chainlink" width="14" height="14" patternUnits="userSpaceOnUse">
-          <path d="M0,0 L14,14 M14,0 L0,14" stroke="#8a97ad" stroke-width="1" fill="none"/>
+        <!-- Chain-link diamond mesh (galvanized round wire: bright core over grey body) -->
+        <pattern id="meshWire" width="19" height="19" patternUnits="userSpaceOnUse">
+          <path d="M0,0 L19,19 M19,0 L0,19" stroke="#b3c1d4" stroke-width="1.9" fill="none"/>
+          <path d="M0,0 L19,19 M19,0 L0,19" stroke="#f0f5fc" stroke-width=".7"  fill="none" opacity=".65"/>
         </pattern>
+        <!-- Galvanized post (vertical pipe — cylinder shading L→R) -->
+        <linearGradient id="fencePost" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0"    stop-color="#2a3142"/>
+          <stop offset="22%"  stop-color="#9aa6ba"/>
+          <stop offset="48%"  stop-color="#e2e8f2"/>
+          <stop offset="68%"  stop-color="#8a93a6"/>
+          <stop offset="100%" stop-color="#252b3a"/>
+        </linearGradient>
+        <!-- Galvanized rail (horizontal pipe — cylinder shading T→B) -->
+        <linearGradient id="fenceRail" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0"    stop-color="#dde4ef"/>
+          <stop offset="42%"  stop-color="#9aa3b5"/>
+          <stop offset="100%" stop-color="#343b4d"/>
+        </linearGradient>
+        <!-- Safety bollard (white pipe — cylinder shading L→R) -->
+        <linearGradient id="bollardG" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0"    stop-color="#8b94a4"/>
+          <stop offset="26%"  stop-color="#ffffff"/>
+          <stop offset="55%"  stop-color="#e9edf3"/>
+          <stop offset="100%" stop-color="#828b9b"/>
+        </linearGradient>
+        <!-- Bollard red band (cylinder shading) -->
+        <linearGradient id="bollardR" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0"    stop-color="#7c1418"/>
+          <stop offset="32%"  stop-color="#e23b3b"/>
+          <stop offset="62%"  stop-color="#c5232a"/>
+          <stop offset="100%" stop-color="#6e1116"/>
+        </linearGradient>
+        <!-- Process-topic number badge -->
+        <linearGradient id="badgeG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#ffb347"/>
+          <stop offset="1" stop-color="#ff7a45"/>
+        </linearGradient>
       </defs>
 
       <!-- ====================== SKY ====================== -->
@@ -271,17 +299,7 @@
           <rect x="243" y="260" width="14" height="20" fill="#a82530"/>
           <rect x="237" y="248" width="26" height="14" rx="3" fill="#3a4258"/>
           <circle cx="250" cy="245" r="3.5" fill="#ffae3d" class="beacon"/>
-          <!-- Level gauge (wider for PPT visibility) -->
-          <rect x="178" y="290" width="20" height="60" rx="2" fill="#0a1322" stroke="#3a4258"/>
-          <rect id="ovTankA" x="180" y="320" width="16" height="30" fill="url(#liqG)"/>
-          <!-- Tick marks on gauge -->
-          <g stroke="#fff" stroke-width=".8" opacity=".4">
-            <line x1="178" y1="305" x2="186" y2="305"/>
-            <line x1="178" y1="320" x2="186" y2="320"/>
-            <line x1="178" y1="335" x2="186" y2="335"/>
-          </g>
-          <text id="ovTankAPct" class="label-num" x="207" y="320" font-size="13" fill="#1a0f00" font-weight="700">50%</text>
-          <text class="label-num" x="250" y="338" text-anchor="middle" fill="#1a0f00" font-weight="700">TANK-A</text>
+          <!-- (level gauge removed — decluttered) -->
         </g>
 
         <!-- Tank-B (front — this is the one being filled by the truck) -->
@@ -296,70 +314,91 @@
           <rect x="253" y="366" width="14" height="20" fill="#a82530"/>
           <rect x="247" y="354" width="26" height="14" rx="3" fill="#3a4258"/>
           <circle cx="260" cy="351" r="3.5" fill="#ffae3d" class="beacon"/>
-          <!-- Level gauge — Tank-B fills during unload phase (wider for PPT visibility) -->
-          <rect x="188" y="396" width="22" height="68" rx="2" fill="#0a1322" stroke="#3a4258"/>
-          <rect id="ovTankB" x="190" y="444" width="18" height="20" fill="url(#liqG)"/>
-          <!-- Tick marks -->
-          <g stroke="#fff" stroke-width=".8" opacity=".4">
-            <line x1="188" y1="413" x2="198" y2="413"/>
-            <line x1="188" y1="430" x2="198" y2="430"/>
-            <line x1="188" y1="447" x2="198" y2="447"/>
-          </g>
-          <text id="ovTankBPct" class="label-num" x="220" y="430" font-size="13" fill="#1a0f00" font-weight="700">30%</text>
-          <text class="label-num" x="260" y="445" text-anchor="middle" fill="#1a0f00" font-weight="700">TANK-B</text>
+          <!-- (level gauge removed — decluttered) -->
         </g>
 
-        <!-- Yard label moved LEFT (x=170) + DOWN slightly so hose path doesn't block it -->
-        <text class="label" x="170" y="540" text-anchor="middle">ลานถังเก็บ LPG</text>
-        <text class="label-sm" x="170" y="560" text-anchor="middle">Storage Bullet Yard</text>
       </g>
 
-      <!-- ====================== STORAGE YARD FENCE (รั้วล้อมถัง) + GATE + ESD ======================
-           Chain-link fence enclosing the bullet tank yard. Gate opening on the front-bottom,
-           ESD emergency-stop button mounted on the right gate post (per safe-access design). -->
+      <!-- ====================== STORAGE YARD FENCE (รั้วล้อมถัง) — galvanized chain-link ======================
+           Modeled on a real Thai LPG yard: diamond chain-link mesh + top/mid/bottom rails + pipe posts
+           (NO barbed wire) · red-white safety bollards (เสากันชน) in front · EMERGENCY-VALVE sign · gate + ESD. -->
       <g id="ovFence">
-        <!-- Chain-link mesh fill (semi-transparent, behind posts) -->
-        <rect x="58" y="250" width="396" height="326" fill="url(#chainlink)" opacity=".22"/>
-        <!-- Gate opening: clear the mesh in the gate gap (x=300-388 on the bottom) by overlaying sky-color -->
-        <rect x="300" y="500" width="88" height="80" fill="url(#groundG)" opacity=".9"/>
+        <!-- ===== chain-link diamond mesh panels (galvanized, semi-transparent) =====
+             Left panel x60→296 · Right panel x388→454 · gate opening between -->
+        <rect x="60"  y="256" width="236" height="308" fill="url(#meshWire)" opacity=".5"/>
+        <rect x="388" y="256" width="66"  height="308" fill="url(#meshWire)" opacity=".5"/>
+        <rect x="60"  y="256" width="236" height="308" fill="none" stroke="#5a6577" stroke-width="1" opacity=".3"/>
+        <rect x="388" y="256" width="66"  height="308" fill="none" stroke="#5a6577" stroke-width="1" opacity=".3"/>
 
-        <!-- Top rail + bottom rails (with gate gap) -->
-        <line x1="56" y1="250" x2="456" y2="250" stroke="#7d8aa3" stroke-width="3"/>
-        <line x1="56" y1="263" x2="456" y2="263" stroke="#5a6577" stroke-width="1.5" opacity=".6"/>
-        <line x1="56" y1="576" x2="300" y2="576" stroke="#7d8aa3" stroke-width="3"/>
-        <line x1="388" y1="576" x2="456" y2="576" stroke="#7d8aa3" stroke-width="3"/>
-        <!-- Left + right rails (vertical sides) -->
-        <line x1="58" y1="250" x2="58" y2="576" stroke="#7d8aa3" stroke-width="3"/>
-        <line x1="454" y1="250" x2="454" y2="500" stroke="#7d8aa3" stroke-width="3"/>
+        <!-- ===== rails (galvanized pipe): top header · mid line · bottom tension ===== -->
+        <rect x="54"  y="252" width="404" height="8" rx="4"   fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".5"/>
+        <rect x="56"  y="406" width="242" height="5" rx="2.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".4" opacity=".9"/>
+        <rect x="388" y="406" width="68"  height="5" rx="2.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".4" opacity=".9"/>
+        <rect x="56"  y="560" width="242" height="7" rx="3.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".5"/>
+        <rect x="388" y="560" width="68"  height="7" rx="3.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".5"/>
 
-        <!-- Fence posts (vertical) -->
-        <g fill="#5a6577" stroke="#3a4258" stroke-width="1">
-          <rect x="55" y="248" width="6" height="330"/>
-          <rect x="150" y="248" width="5" height="330" opacity=".7"/>
-          <rect x="250" y="248" width="5" height="330" opacity=".7"/>
-          <rect x="451" y="248" width="6" height="254"/>
+        <!-- ===== posts (galvanized pipe, cylindrical) with domed caps ===== -->
+        <g stroke="#1f2c46" stroke-width=".5">
+          <rect x="55"  y="246" width="10" height="320" rx="3.5" fill="url(#fencePost)"/>
+          <rect x="154" y="246" width="9"  height="320" rx="3"   fill="url(#fencePost)"/>
+          <rect x="254" y="246" width="9"  height="320" rx="3"   fill="url(#fencePost)"/>
+          <rect x="449" y="246" width="10" height="320" rx="3.5" fill="url(#fencePost)"/>
+          <!-- gate terminal posts (thicker) -->
+          <rect x="289" y="244" width="13" height="322" rx="3.5" fill="url(#fencePost)"/>
+          <rect x="385" y="244" width="13" height="322" rx="3.5" fill="url(#fencePost)"/>
+        </g>
+        <g fill="#e7ecf4" stroke="#2a3142" stroke-width=".5">
+          <ellipse cx="60"  cy="246" rx="6.5" ry="3"/>
+          <ellipse cx="158" cy="246" rx="6"   ry="2.6"/>
+          <ellipse cx="258" cy="246" rx="6"   ry="2.6"/>
+          <ellipse cx="454" cy="246" rx="6.5" ry="3"/>
+          <ellipse cx="295" cy="244" rx="8"   ry="3.2"/>
+          <ellipse cx="391" cy="244" rx="8"   ry="3.2"/>
         </g>
 
-        <!-- GATE (two posts at the opening) -->
-        <rect x="296" y="498" width="8" height="80" fill="#7d8aa3" stroke="#3a4258" stroke-width="1"/>
-        <rect x="384" y="498" width="8" height="80" fill="#7d8aa3" stroke="#3a4258" stroke-width="1"/>
-        <!-- Gate top bar -->
-        <rect x="296" y="498" width="96" height="6" fill="#5a6577"/>
-        <!-- Open gate leaf (swung inward) -->
-        <g opacity=".7">
-          <line x1="304" y1="502" x2="340" y2="540" stroke="#8a97ad" stroke-width="2"/>
-          <rect x="304" y="502" width="40" height="40" fill="url(#chainlink)" opacity=".3" transform="rotate(28 304 502)"/>
+        <!-- ===== EMERGENCY STATION — valve sign + ESD STOP button combined into one point by the gate ===== -->
+        <g transform="translate(172, 408)">
+          <!-- Emergency-valve sign -->
+          <rect x="0" y="0" width="112" height="34" rx="2" fill="#f4f6fa" stroke="#9aa3b5" stroke-width="1"/>
+          <rect x="3" y="3" width="106" height="28" rx="1" fill="none" stroke="#c5232a" stroke-width="2"/>
+          <text x="56" y="16" text-anchor="middle" font-size="13" font-weight="800" fill="#c5232a" font-family="Sarabun,sans-serif">วาล์วฉุกเฉิน</text>
+          <text x="56" y="27" text-anchor="middle" font-size="7" font-weight="700" fill="#c5232a" font-family="Consolas,monospace">EMERGENCY VALVE</text>
+          <!-- ESD STOP button directly below (same emergency point) -->
+          <g transform="translate(42, 40)">
+            <rect x="-2" y="0" width="32" height="44" rx="4" fill="#252e44" stroke="#3a4a6e" stroke-width="1.5"/>
+            <circle cx="14" cy="15" r="13" fill="var(--hot)" stroke="#5a1015" stroke-width="2" class="pulse"/>
+            <text x="14" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">STOP</text>
+            <text class="label-sm" x="14" y="40" text-anchor="middle" font-size="9" fill="var(--hot)"></text>
+          </g>
         </g>
-        <!-- Gate label -->
-        <text class="label-sm" x="344" y="595" text-anchor="middle" font-size="13" fill="var(--accent)">🚪 ประตูรั้ว (Gate)</text>
 
-        <!-- ESD STOP button mounted on the RIGHT gate post -->
-        <g transform="translate(392, 508)">
-          <rect x="-2" y="0" width="32" height="44" rx="4" fill="#252e44" stroke="#3a4a6e" stroke-width="1.5"/>
-          <circle cx="14" cy="15" r="13" fill="var(--hot)" stroke="#5a1015" stroke-width="2" class="pulse"/>
-          <text x="14" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">STOP</text>
-          <text class="label-sm" x="14" y="40" text-anchor="middle" font-size="9" fill="var(--hot)">ESD</text>
+        <!-- ===== GATE — open framed chain-link leaf (hinged on right gate post x=391) ===== -->
+        <g opacity=".95">
+          <polygon points="391,300 352,291 352,556 391,560" fill="url(#meshWire)" opacity=".55"/>
+          <polyline points="391,300 352,291 352,556 391,560" fill="none" stroke="url(#fenceRail)" stroke-width="5" stroke-linejoin="round"/>
+          <line x1="371" y1="295" x2="371" y2="558" stroke="url(#fenceRail)" stroke-width="3" opacity=".7"/>
+          <circle cx="352" cy="430" r="4" fill="#e7ecf4" stroke="#2a3142" stroke-width=".6"/>
         </g>
+
+        <!-- (ESD STOP button merged into the emergency station above) -->
+
+        <!-- ===== RED-WHITE SAFETY BOLLARDS (เสากันชน) in front of the fence ===== -->
+        <!-- connecting guard rails (galvanized) drawn behind the bollards -->
+        <g stroke="url(#fenceRail)" stroke-linecap="round" stroke-width="5">
+          <line x1="58"  y1="582" x2="242" y2="582"/>
+          <line x1="58"  y1="602" x2="242" y2="602"/>
+          <line x1="400" y1="582" x2="452" y2="582"/>
+          <line x1="400" y1="602" x2="452" y2="602"/>
+        </g>
+        ${[64,106,148,190,232,404,446].map(bx => `
+        <g transform="translate(${bx},566)">
+          <ellipse cx="0" cy="57" rx="9" ry="2.5" fill="#000" opacity=".3"/>
+          <rect x="-7" y="2" width="14" height="55" rx="2" fill="url(#bollardG)" stroke="#6e7686" stroke-width=".4"/>
+          <path d="M-7,4 Q-7,-5 0,-5 Q7,-5 7,4 Z" fill="url(#bollardR)"/>
+          <rect x="-7" y="14" width="14" height="8" fill="url(#bollardR)"/>
+          <rect x="-7" y="40" width="14" height="8" fill="url(#bollardR)"/>
+        </g>`).join('')}
+
       </g>
 
       <!-- ====================== TANK TRUCK (cab on RIGHT, faces right = direction of motion) ====================== -->
@@ -417,14 +456,7 @@
           <!-- Pointer arrow toward clamp -->
           <path d="M 0 12 L -10 -8" stroke="#3ddc84" stroke-width="2" fill="none"/>
         </g>
-        <!-- Big readable badge in upper sky area near truck bay (clear of ESD, hose, truck) -->
-        <g transform="translate(620, 180)">
-          <rect x="0" y="0" width="240" height="40" rx="6" fill="#3ddc84" stroke="#1a4221" stroke-width="2"/>
-          <circle cx="24" cy="20" r="14" fill="#fff"/>
-          <text x="24" y="26" text-anchor="middle" font-size="18" font-weight="800" fill="#3ddc84">⚡</text>
-          <text x="140" y="17" text-anchor="middle" font-size="14" font-weight="700" fill="#04210f" font-family="Sarabun,sans-serif">EARTH CONNECTED</text>
-          <text x="140" y="33" text-anchor="middle" font-size="11" font-weight="600" fill="#04210f" font-family="Sarabun,sans-serif">Earthing R &lt; 10 Ω ✓</text>
-        </g>
+        <!-- (EARTH CONNECTED badge removed per request) -->
       </g>
 
       <!-- Hose + flow. Connects from TOP of tanker (manifold) up to Tank-B inlet. Truck parked at translate(140,600). -->
@@ -444,7 +476,6 @@
         <rect x="362" y="453" width="24" height="14" rx="2" fill="#5a6577" stroke="#1a1d2a" stroke-width="1.5"/>
         <rect x="366" y="451" width="16" height="4" fill="#3a4258"/>
         <rect x="388" y="453" width="16" height="14" rx="1" fill="#a82530" stroke="#5a1015"/>
-        <text x="396" y="464" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">IN</text>
         <!-- Flow direction arrow on hose -->
         <g transform="translate(290, 545) rotate(-40)">
           <polygon points="0,-10 14,0 0,10" fill="#5ac8fa" stroke="#1a4a78" stroke-width="1.5"/>
@@ -572,9 +603,6 @@
             <line x1="93" y1="50" x2="93" y2="74"/>
             <line x1="96" y1="50" x2="96" y2="74"/>
           </g>
-          <!-- Motor nameplate -->
-          <rect x="74" y="58" width="22" height="6" rx="1" fill="#0a1322"/>
-          <text x="85" y="63" text-anchor="middle" font-size="5" fill="var(--liquid)" font-family="Consolas,monospace">5.5 kW</text>
           <!-- Motor end cap (right) -->
           <rect x="98" y="50" width="3" height="24" fill="#1a4a78"/>
           <!-- Fan cover at end -->
@@ -588,17 +616,8 @@
           <rect x="94" y="76" width="4" height="4" fill="#0a0a14"/>
 
           <!-- ════════ TITLE BAR ════════ -->
-          <rect x="6" y="2" width="42" height="13" rx="2" fill="#0a1322" stroke="#3a4a6e" stroke-width=".5"/>
-          <text x="27" y="11" text-anchor="middle" class="label-num" font-size="10" fill="var(--liquid)">PUMP-01</text>
-
-          <!-- RUN indicator -->
-          <circle cx="78" cy="86" r="2.5" fill="var(--good)" class="pulse"/>
-          <text x="83" y="89" font-size="6.5" font-weight="700" fill="var(--good)" font-family="Consolas,monospace">RUN</text>
         </g>
 
-        <!-- Label moved ABOVE the pump body (was below — got covered by carousel) -->
-        <text class="label" x="50" y="-22" text-anchor="middle" font-size="16">ปั๊ม LPG</text>
-        <text class="label-sm" x="50" y="-8" text-anchor="middle" font-size="12" opacity=".8">Centrifugal Pump</text>
       </g>
 
 
@@ -686,7 +705,6 @@
               <rect x="4" y="-65" width="22" height="14" rx="2" fill="#252e44" stroke="#1a1d2a" stroke-width=".8"/>
               <rect x="6" y="-63" width="18" height="10" fill="#0a1322"/>
               <rect x="6" y="-63" width="18" height="10" fill="#5ac8fa" opacity=".55"/>
-              <text x="15" y="-56" text-anchor="middle" font-size="5.5" font-weight="700" fill="#0a1322" font-family="Consolas,monospace">15.0kg</text>
               <!-- Pneumatic filling arm from post over to cylinder valve -->
               <line x1="15" y1="-30" x2="3" y2="-34" stroke="#7d8aa3" stroke-width="3.2" stroke-linecap="round"/>
               <rect x="-1" y="-37" width="6" height="6" fill="#3a4258" stroke="#1a1d2a" stroke-width=".5"/>
@@ -706,7 +724,6 @@
           <ellipse cx="60"  cy="8" rx="6" ry="8" fill="#5a6577"/>
           <rect x="-60" y="0" width="120" height="16" rx="3" fill="#7d8aa3" stroke="#1a1d2a" stroke-width="1.5"/>
           <rect x="-60" y="0" width="120" height="4" fill="#a8b3c8"/>
-          <text x="0" y="11" text-anchor="middle" font-size="8" font-weight="700" fill="#1a0f00" font-family="Sarabun,sans-serif">GAS SUPPLY HEADER • 6-WAY</text>
           <!-- 6 small valves visible on header (one per filling station) -->
           ${[-45,-27,-9,9,27,45].map(x => `
             <rect x="${x-2}" y="14" width="4" height="6" fill="#a82530"/>
@@ -716,9 +733,8 @@
           <rect x="-3" y="20" width="6" height="14" fill="#a82530"/>
         </g>
 
-        <!-- LABEL (carousel title — prominent, with accent color) -->
-        <text class="label" x="0" y="155" text-anchor="middle" fill="var(--accent)" font-size="20">เครื่องบรรจุก๊าซแบบหมุนวน</text>
-        <text class="label-sm" x="0" y="178" text-anchor="middle">Filling Carousel • 6 หัวบรรจุ • 600–1500 ถัง/ชั่วโมง</text>
+        <!-- LABEL (carousel title — Thai only, decluttered) -->
+        <text class="label" x="0" y="166" text-anchor="middle" fill="var(--accent)" font-size="20">เครื่องบรรจุก๊าซแบบหมุนวน</text>
       </g>
 
       <!-- ====================== CONVEYOR (LEFT-TO-RIGHT) ====================== -->
@@ -742,95 +758,7 @@
         </g>
       </g>
 
-      <!-- ====================== LEAK DETECTION BOOTH (realistic enclosure) ======================
-           Cylinders pass through this booth after filling. Multiple sensor probes detect gas leakage
-           at: (1) O-ring at valve neck, (2) valve seat, (3) cylinder body.
-           Vent hood on top exhausts any leaked gas safely. -->
-      <g class="hot-zone" data-eq="leak" transform="translate(1005, 478)">
-        <rect class="hover-ring" x="-10" y="-22" width="140" height="135" rx="8" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 5"/>
-
-        <g filter="url(#softShadow)">
-          <!-- ════════ VENT HOOD (top — exhausts any leaked gas) ════════ -->
-          <path d="M 30 -8 L 25 -16 L 95 -16 L 90 -8 Z" fill="#3a4258" stroke="#0a1322" stroke-width="1"/>
-          <rect x="56" y="-32" width="8" height="16" fill="#7d8aa3" stroke="#1a1d2a" stroke-width=".6"/>
-          <!-- Exhaust vapor puffs going up -->
-          <circle cx="60" cy="-35" r="2.5" fill="#a8b3c8" opacity=".5">
-            <animate attributeName="cy" values="-35;-50" dur="1.8s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values=".55;0" dur="1.8s" repeatCount="indefinite"/>
-            <animate attributeName="r" values="2.5;4" dur="1.8s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="60" cy="-35" r="2" fill="#a8b3c8" opacity=".5">
-            <animate attributeName="cy" values="-35;-48" dur="1.8s" begin="-.6s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values=".55;0" dur="1.8s" begin="-.6s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="60" cy="-35" r="2" fill="#a8b3c8" opacity=".5">
-            <animate attributeName="cy" values="-35;-46" dur="1.8s" begin="-1.2s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values=".55;0" dur="1.8s" begin="-1.2s" repeatCount="indefinite"/>
-          </circle>
-
-          <!-- ════════ MAIN BOOTH ENCLOSURE ════════ -->
-          <rect x="0" y="-8" width="120" height="100" rx="3" fill="#252e44" stroke="#3a4a6e" stroke-width="1.5"/>
-
-          <!-- ════════ TOP DISPLAY PANEL ════════ -->
-          <rect x="0" y="-8" width="120" height="22" fill="#0a1322" stroke="#3a4258" stroke-width="1"/>
-          <text x="60" y="5" text-anchor="middle" class="label-num" font-size="11" fill="var(--liquid)">LEAK DETECTOR • LDX-2000</text>
-
-          <!-- ════════ PPM READOUT (digital display) ════════ -->
-          <rect x="6" y="18" width="50" height="22" rx="2" fill="#0a1322" stroke="#3a4258" stroke-width="1"/>
-          <text x="31" y="27" text-anchor="middle" font-size="6" fill="#5a6577" font-family="Consolas,monospace">METHANE PPM</text>
-          <text x="31" y="38" text-anchor="middle" font-size="13" font-weight="700" fill="var(--good)" font-family="Consolas,monospace">0.0</text>
-
-          <!-- ════════ STATUS INDICATOR ════════ -->
-          <rect x="60" y="18" width="54" height="22" rx="2" fill="#0a1322" stroke="#3a4258" stroke-width="1"/>
-          <circle cx="72" cy="29" r="4" fill="var(--good)" class="pulse"/>
-          <text x="93" y="33" text-anchor="middle" font-size="10" font-weight="700" fill="var(--good)" font-family="Consolas,monospace">PASS</text>
-
-          <!-- ════════ INSPECTION WINDOW (showing cylinder inside booth) ════════ -->
-          <rect x="20" y="44" width="80" height="40" rx="2" fill="#0a1322" stroke="#3a4258" stroke-width="1.5"/>
-          <!-- Glass reflection -->
-          <rect x="22" y="46" width="76" height="3" fill="#5ac8fa" opacity=".15"/>
-
-          <!-- ════════ CYLINDER UNDER TEST (visible through window) ════════ -->
-          <rect x="55" y="48" width="14" height="34" rx="1.5" fill="url(#redCyl)" stroke="#3a0d10" stroke-width="1"/>
-          <rect x="59" y="44" width="6" height="5" rx="1" fill="#7d8aa3" stroke="#3a4258" stroke-width=".5"/>
-          <rect x="55" y="52" width="14" height="1.5" fill="#1a0508" opacity=".6"/>
-          <rect x="55" y="78" width="14" height="1.5" fill="#1a0508" opacity=".6"/>
-          <rect x="57" y="56" width="10" height="3" fill="#fff" opacity=".18"/>
-
-          <!-- ════════ SENSOR PROBE 1: O-ring at valve neck (top, pointing down) ════════ -->
-          <rect x="60" y="40" width="4" height="6" fill="#5a6577" stroke="#1a1d2a" stroke-width=".5"/>
-          <line x1="62" y1="46" x2="62" y2="48" stroke="var(--good)" stroke-width="2">
-            <animate attributeName="opacity" values=".3;1;.3" dur=".8s" repeatCount="indefinite"/>
-          </line>
-          <text x="62" y="38" text-anchor="middle" font-size="5.5" fill="var(--good)" font-family="Consolas,monospace">S1</text>
-
-          <!-- ════════ SENSOR PROBE 2: valve seat (right side) ════════ -->
-          <rect x="76" y="52" width="6" height="4" fill="#5a6577" stroke="#1a1d2a" stroke-width=".5"/>
-          <line x1="76" y1="54" x2="70" y2="54" stroke="var(--good)" stroke-width="2">
-            <animate attributeName="opacity" values=".3;1;.3" dur=".8s" begin="-.3s" repeatCount="indefinite"/>
-          </line>
-          <text x="86" y="56" text-anchor="middle" font-size="5.5" fill="var(--good)" font-family="Consolas,monospace">S2</text>
-
-          <!-- ════════ SENSOR PROBE 3: cylinder body weld seam (left side) ════════ -->
-          <rect x="42" y="64" width="6" height="4" fill="#5a6577" stroke="#1a1d2a" stroke-width=".5"/>
-          <line x1="48" y1="66" x2="54" y2="66" stroke="var(--good)" stroke-width="2">
-            <animate attributeName="opacity" values=".3;1;.3" dur=".8s" begin="-.5s" repeatCount="indefinite"/>
-          </line>
-          <text x="38" y="68" text-anchor="middle" font-size="5.5" fill="var(--good)" font-family="Consolas,monospace">S3</text>
-
-          <!-- ════════ WARNING BEACON (on top corner — green when clear, red if leak) ════════ -->
-          <rect x="108" y="-22" width="6" height="14" fill="#5a6577"/>
-          <circle cx="111" cy="-26" r="5" fill="#a82530" opacity=".3"/>
-          <circle cx="111" cy="-26" r="3.5" fill="var(--good)" class="pulse"/>
-
-          <!-- ════════ CONVEYOR EXIT (right side) ════════ -->
-          <rect x="118" y="84" width="14" height="8" rx="1" fill="#1a1d2a"/>
-        </g>
-
-        <!-- Label moved ABOVE the booth (was below — got covered by carousel) -->
-        <text class="label" x="60" y="-58" text-anchor="middle" font-size="16">ตู้ตรวจรอยรั่ว</text>
-        <text class="label-sm" x="60" y="-44" text-anchor="middle" font-size="12" opacity=".8">Leak Detector</text>
-      </g>
+      <!-- (Leak-detection booth removed per request — Thai bottling plants do not use a walk-through booth; the leak test is done manually with an electronic sniffer / soap solution) -->
 
       <!-- ====================== WAREHOUSE ====================== -->
       <g class="hot-zone" data-eq="warehouse" transform="translate(1200,380)">
@@ -854,23 +782,11 @@
             ${[13,39,65,91,117].map((x,i) => `<use href="#cyl" x="${x}" y="40" width="22" height="36"/>`).join('')}
           </g>
           <rect x="100" y="36" width="100" height="20" rx="3" fill="var(--accent)"/>
-          <text x="150" y="50" text-anchor="middle" font-weight="700" fill="#1a0f00" font-size="14" font-family="Sarabun, sans-serif">WAREHOUSE</text>
+          <text x="150" y="51" text-anchor="middle" font-weight="700" fill="#1a0f00" font-size="13" font-family="Sarabun, sans-serif">โกดังเก็บถัง</text>
         </g>
-        <text class="label-sm" x="150" y="280" text-anchor="middle">โกดังถังบรรจุแล้ว</text>
       </g>
 
-      <!-- ====================== WATER DELUGE RING ====================== -->
-      <g id="ovDeluge">
-        <g stroke="#5ac8fa" stroke-width="2" fill="none" opacity=".4">
-          <line x1="100" y1="270" x2="400" y2="270" stroke-dasharray="6 4"/>
-          <line x1="100" y1="425" x2="420" y2="425" stroke-dasharray="6 4"/>
-        </g>
-        <g fill="#3a8fc8">
-          ${[150,220,290,360].map(x => `<polygon points="${x},270 ${x+6},278 ${x-6},278"/>`).join('')}
-          ${[150,220,290,370].map(x => `<polygon points="${x},425 ${x+6},433 ${x-6},433"/>`).join('')}
-        </g>
-        <text class="label-sm" x="250" y="260" text-anchor="middle" fill="var(--liquid)" font-size="14">💧 Water Deluge Ring</text>
-      </g>
+      <!-- (Water deluge ring removed — decluttered) -->
 
       <!-- ====================== FIRE + DELUGE DEMO (toggled by btnFire) ====================== -->
       <g id="ovFireScene" opacity="0">
@@ -916,94 +832,10 @@
         <text class="label-num" x="500" y="660" text-anchor="middle" fill="var(--hot)" font-size="14" font-weight="700">⚠ ไอ LPG หนักกว่าอากาศ 1.5× — สะสมต่ำ ไหลตามลม</text>
       </g>
 
-      <!-- ====================== SAFETY EQUIPMENT (gas detectors, ESD, fire monitor) ====================== -->
-      <g transform="translate(220,360)">
-        <rect x="-7" y="-13" width="14" height="22" rx="2" fill="#252e44" stroke="#3a4a6e"/>
-        <circle r="3.5" fill="var(--good)" class="pulse"/>
-        <text class="label-num" x="0" y="22" text-anchor="middle" font-size="13" fill="var(--good)">DET-1</text>
-      </g>
-      <g transform="translate(720,478)">
-        <rect x="-7" y="-13" width="14" height="22" rx="2" fill="#252e44" stroke="#3a4a6e"/>
-        <circle r="3.5" fill="var(--good)" class="pulse"/>
-        <text class="label-num" x="0" y="22" text-anchor="middle" font-size="13" fill="var(--good)">DET-2</text>
-      </g>
-      <g transform="translate(1080,560)">
-        <rect x="-7" y="-13" width="14" height="22" rx="2" fill="#252e44" stroke="#3a4a6e"/>
-        <circle r="3.5" fill="var(--good)" class="pulse"/>
-        <text class="label-num" x="0" y="22" text-anchor="middle" font-size="13" fill="var(--good)">DET-3</text>
-      </g>
+      <!-- (gas-detector markers removed — decluttered, keeping the scene visual) -->
 
-      <!-- (ESD station relocated to the storage-yard fence gate — see #ovFence) -->
 
-      <!-- ====================== SAFETY SIGN BOARD (ISO 7010 / มอก. 635-2554) ======================
-           Compliant Thai safety signage for LPG bottling plants per กฎกระทรวง พ.ศ. 2564
-           - Prohibition (P002, P003): red circle + slash, white bg
-           - Warning (W021): yellow triangle, black border
-           - Mandatory (M001): blue circle, white icon
-           - NFPA 704 included as supplementary international ID
-       -->
-      <g transform="translate(20, 500)">
-        <!-- Mounting post -->
-        <rect x="32" y="0" width="6" height="210" fill="#5a6577" stroke="#1a1d2a"/>
-
-        <!-- Sign 1: P002 ห้ามสูบบุหรี่ -->
-        <g transform="translate(0, 22)">
-          <rect width="76" height="44" rx="2" fill="#fff" stroke="#0a1322" stroke-width="1.2"/>
-          <g transform="translate(8, 5)">
-            <circle cx="14" cy="14" r="12.5" fill="#fff" stroke="#a82530" stroke-width="3"/>
-            <!-- Cigarette -->
-            <rect x="3" y="13" width="16" height="2.5" fill="#1a1d2a"/>
-            <rect x="19" y="12" width="3" height="4.5" fill="#ffae3d"/>
-            <line x1="3.5" y1="3.5" x2="24.5" y2="24.5" stroke="#a82530" stroke-width="3.5" stroke-linecap="round"/>
-          </g>
-          <text x="44" y="16" font-size="9" font-weight="700" fill="#a82530" font-family="Sarabun,sans-serif">ห้ามสูบ</text>
-          <text x="44" y="27" font-size="9" font-weight="700" fill="#a82530" font-family="Sarabun,sans-serif">บุหรี่</text>
-          <text x="44" y="39" font-size="6.5" font-weight="600" fill="#7a8499" font-family="Consolas,monospace">ISO P002</text>
-        </g>
-
-        <!-- Sign 2: P003 ห้ามใช้เปลวไฟ -->
-        <g transform="translate(0, 70)">
-          <rect width="76" height="44" rx="2" fill="#fff" stroke="#0a1322" stroke-width="1.2"/>
-          <g transform="translate(8, 5)">
-            <circle cx="14" cy="14" r="12.5" fill="#fff" stroke="#a82530" stroke-width="3"/>
-            <!-- Flame icon -->
-            <path d="M14 5 Q19 10 17 17 Q14 14 14 19 Q10 14 13 10 Q11 7 14 5 Z" fill="#1a1d2a"/>
-            <line x1="3.5" y1="3.5" x2="24.5" y2="24.5" stroke="#a82530" stroke-width="3.5" stroke-linecap="round"/>
-          </g>
-          <text x="44" y="16" font-size="9" font-weight="700" fill="#a82530" font-family="Sarabun,sans-serif">ห้ามใช้</text>
-          <text x="44" y="27" font-size="9" font-weight="700" fill="#a82530" font-family="Sarabun,sans-serif">เปลวไฟ</text>
-          <text x="44" y="39" font-size="6.5" font-weight="600" fill="#7a8499" font-family="Consolas,monospace">ISO P003</text>
-        </g>
-
-        <!-- Sign 3: W021 ก๊าซไวไฟ (yellow warning triangle) -->
-        <g transform="translate(0, 118)">
-          <rect width="76" height="44" rx="2" fill="#fff" stroke="#0a1322" stroke-width="1.2"/>
-          <g transform="translate(7, 5)">
-            <polygon points="14,2 27,25 1,25" fill="#ffd166" stroke="#1a1d2a" stroke-width="2.2"/>
-            <path d="M14 11 Q19 16 17 22 Q14 19 14 23 Q10 19 13 16 Q11 13 14 11 Z" fill="#1a1d2a"/>
-          </g>
-          <text x="44" y="16" font-size="9" font-weight="700" fill="#a06030" font-family="Sarabun,sans-serif">วัตถุ</text>
-          <text x="44" y="27" font-size="9" font-weight="700" fill="#a06030" font-family="Sarabun,sans-serif">ไวไฟ</text>
-          <text x="44" y="39" font-size="6.5" font-weight="600" fill="#7a8499" font-family="Consolas,monospace">ISO W021</text>
-        </g>
-
-        <!-- Sign 4: M001+M004 PPE บังคับ (blue mandatory) -->
-        <g transform="translate(0, 166)">
-          <rect width="76" height="44" rx="2" fill="#fff" stroke="#0a1322" stroke-width="1.2"/>
-          <g transform="translate(8, 5)">
-            <circle cx="14" cy="14" r="13" fill="#1a4a78"/>
-            <!-- Hard hat icon -->
-            <path d="M5 14 Q14 5 23 14 L23 17 L5 17 Z" fill="#fff"/>
-            <rect x="4" y="17" width="20" height="2" fill="#fff"/>
-            <!-- chin strap -->
-            <path d="M9 17 L9 22" stroke="#fff" stroke-width="1.2" fill="none"/>
-            <path d="M19 17 L19 22" stroke="#fff" stroke-width="1.2" fill="none"/>
-          </g>
-          <text x="44" y="16" font-size="9" font-weight="700" fill="#1a4a78" font-family="Sarabun,sans-serif">ต้องสวม</text>
-          <text x="44" y="27" font-size="9" font-weight="700" fill="#1a4a78" font-family="Sarabun,sans-serif">PPE</text>
-          <text x="44" y="39" font-size="6.5" font-weight="600" fill="#7a8499" font-family="Consolas,monospace">ISO M001</text>
-        </g>
-      </g>
+      <!-- (Safety sign board removed per request — signage is covered in the slide deck) -->
 
       <!-- ====================== WIND SOCK (mounted on WAREHOUSE roof peak) ======================
            Warehouse at translate(1200, 380) — roof peak at viewBox (1350, 390).
@@ -1027,8 +859,6 @@
           <!-- End opening (white inside) -->
           <ellipse cx="48" cy="-52" rx="2" ry="3" fill="#fff" opacity=".5"/>
         </g>
-        <!-- Wind label -->
-        <text class="label-sm" x="20" y="-66" text-anchor="middle" font-size="11" fill="var(--ink)">Wind</text>
       </g>
 
       <!-- ====================== WORKERS ====================== -->
@@ -1038,7 +868,7 @@
       <!-- Filling operator (static near carousel) -->
       <use href="#worker" x="0" y="0" width="20" height="36" transform="translate(770,602)"/>
 
-      <!-- Inspector (static near leak booth) -->
+      <!-- Inspector (static at conveyor end — manual leak / quality check) -->
       <use href="#inspector" x="0" y="0" width="20" height="36" transform="translate(1110,605)"/>
 
       <!-- Birds -->
@@ -1049,6 +879,61 @@
         <path d="M0,0 Q3,-3 6,0 Q9,-3 12,0">
           <animateMotion dur="60s" begin="-25s" repeatCount="indefinite" path="M -50 90 C 400 70, 800 100, 1200 80 C 1400 70, 1600 90, 1800 80"/>
         </path>
+      </g>
+
+      <!-- ====================== PROCESS TOPICS RIBBON (1–7 steps, in-canvas for PPT embed) ======================
+           Drawn last so it overlays the top sky strip; semi-opaque bar keeps labels legible. -->
+      <g id="ovTopics">
+        <rect x="0" y="0" width="1600" height="56" fill="#05091a" fill-opacity=".82"/>
+        <rect x="0" y="54.5" width="1600" height="2.5" fill="#ffb347" opacity=".6"/>
+
+        <g transform="translate(24,28)">
+          <circle cx="15" cy="0" r="13" fill="url(#badgeG)" stroke="#a04020" stroke-width=".5"/>
+          <text x="15" y="5" text-anchor="middle" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="#1a0f00">1</text>
+          <text class="label" x="33" y="5" style="font-size:15.5px">ตรวจสภาพถัง</text>
+        </g>
+        <text x="234" y="35" text-anchor="middle" font-size="22" font-weight="800" fill="#ffb347" opacity=".55">›</text>
+
+        <g transform="translate(246,28)">
+          <circle cx="15" cy="0" r="13" fill="url(#badgeG)" stroke="#a04020" stroke-width=".5"/>
+          <text x="15" y="5" text-anchor="middle" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="#1a0f00">2</text>
+          <text class="label" x="33" y="5" style="font-size:15.5px">ชั่งถังเปล่า</text>
+        </g>
+        <text x="456" y="35" text-anchor="middle" font-size="22" font-weight="800" fill="#ffb347" opacity=".55">›</text>
+
+        <g transform="translate(468,28)">
+          <circle cx="15" cy="0" r="13" fill="url(#badgeG)" stroke="#a04020" stroke-width=".5"/>
+          <text x="15" y="5" text-anchor="middle" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="#1a0f00">3</text>
+          <text class="label" x="33" y="5" style="font-size:15.5px">อัด LPG เข้าถัง</text>
+        </g>
+        <text x="678" y="35" text-anchor="middle" font-size="22" font-weight="800" fill="#ffb347" opacity=".55">›</text>
+
+        <g transform="translate(690,28)">
+          <circle cx="15" cy="0" r="13" fill="url(#badgeG)" stroke="#a04020" stroke-width=".5"/>
+          <text x="15" y="5" text-anchor="middle" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="#1a0f00">4</text>
+          <text class="label" x="33" y="5" style="font-size:15.5px">ชั่งหลังบรรจุ</text>
+        </g>
+        <text x="900" y="35" text-anchor="middle" font-size="22" font-weight="800" fill="#ffb347" opacity=".55">›</text>
+
+        <g transform="translate(912,28)">
+          <circle cx="15" cy="0" r="13" fill="url(#badgeG)" stroke="#a04020" stroke-width=".5"/>
+          <text x="15" y="5" text-anchor="middle" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="#1a0f00">5</text>
+          <text class="label" x="33" y="5" style="font-size:15.5px">ทดสอบรอยรั่ว</text>
+        </g>
+        <text x="1122" y="35" text-anchor="middle" font-size="22" font-weight="800" fill="#ffb347" opacity=".55">›</text>
+
+        <g transform="translate(1134,28)">
+          <circle cx="15" cy="0" r="13" fill="url(#badgeG)" stroke="#a04020" stroke-width=".5"/>
+          <text x="15" y="5" text-anchor="middle" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="#1a0f00">6</text>
+          <text class="label" x="33" y="5" style="font-size:15.5px">ปิดซีล+อุปกรณ์</text>
+        </g>
+        <text x="1344" y="35" text-anchor="middle" font-size="22" font-weight="800" fill="#ffb347" opacity=".55">›</text>
+
+        <g transform="translate(1356,28)">
+          <circle cx="15" cy="0" r="13" fill="url(#badgeG)" stroke="#a04020" stroke-width=".5"/>
+          <text x="15" y="5" text-anchor="middle" font-family="Consolas,monospace" font-size="15" font-weight="800" fill="#1a0f00">7</text>
+          <text class="label" x="33" y="5" style="font-size:15.5px">จัดจำหน่าย</text>
+        </g>
       </g>
     </svg>
   `;
@@ -1064,8 +949,6 @@
   const $ = id => document.getElementById(id);
   const truck      = $('ovTruck');
   const truckLiq   = $('ovTruckLiquid');
-  const tankBLiq   = $('ovTankB');
-  const tankALiq   = $('ovTankA');
   const ground     = $('ovGround');
   const hose       = $('ovHoseGroup');
   const opr        = $('ovOpr');
@@ -1170,38 +1053,13 @@
     const hoseVis = (t >= 4.5 && t < 12) ? 1 : 0;
     hose.setAttribute('opacity', hoseVis);
 
-    // ---- LIQUID LEVELS ----
-    // Tank-B gauge geometry: gauge box y=396 to y=464 (height=68). MAX safe fill = 85% = 58 px.
-    // Tank-B starts at 30 (≈44%), fills to 58 (=85%) during unload — never overflows past gauge.
-    let tankBHeight = 30, truckLiqHeight = 40;
-    if (t < 5.5){
-      tankBHeight = 30;
-      truckLiqHeight = 40;
-    } else if (t < 12){
-      const k = clamp((t - 5.5) / 6.5, 0, 1);
-      tankBHeight = lerp(30, 58, k);   // 30 → 58 (85% — กฎ 85% ห้ามเกิน)
-      truckLiqHeight = lerp(40, 8, k);
-    } else {
-      tankBHeight = 58;       // capped at 85%
-      truckLiqHeight = 8;
-    }
-    tankBLiq.setAttribute('height', tankBHeight);
-    tankBLiq.setAttribute('y', 464 - tankBHeight);
+    // ---- TRUCK LIQUID LEVEL (tanker empties during unload; storage-tank gauges removed) ----
+    let truckLiqHeight = 40;
+    if (t < 5.5)       truckLiqHeight = 40;
+    else if (t < 12)   truckLiqHeight = lerp(40, 8, clamp((t - 5.5) / 6.5, 0, 1));
+    else               truckLiqHeight = 8;
     truckLiq.setAttribute('height', truckLiqHeight);
     truckLiq.setAttribute('y', 100 - truckLiqHeight);
-    // Tank-B percent readout (30/68=44%, 58/68=85%)
-    const tankBPct = Math.round((tankBHeight / 68) * 100);
-    const tankBPctEl = document.getElementById('ovTankBPct');
-    if (tankBPctEl) tankBPctEl.textContent = tankBPct + '%';
-
-    // ---- Tank-A subtle "production drain" (slowly drops over cycle to show usage) ----
-    const longCycle = ((performance.now() - pauseOffset) / 1000) % 32;
-    const tankAH = longCycle < 16 ? lerp(35, 22, longCycle/16) : lerp(22, 35, (longCycle-16)/16);
-    tankALiq.setAttribute('height', tankAH);
-    tankALiq.setAttribute('y', 350 - tankAH);          // gauge box y=290 height=60; baseline y=350
-    const tankAPct = Math.round((tankAH / 60) * 100);
-    const tankAPctEl = document.getElementById('ovTankAPct');
-    if (tankAPctEl) tankAPctEl.textContent = tankAPct + '%';
 
     // ---- CLOCK + PHASE INDICATOR ----
     clock.textContent = t.toFixed(1) + 's';
