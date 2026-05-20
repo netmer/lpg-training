@@ -54,7 +54,7 @@
       img:'./images/carousel.jpg'
     },
     warehouse: {
-      title:'โกดังเก็บถังบรรจุแล้ว',
+      title:'โรงเก็บก๊าซ (ถังบรรจุแล้ว)',
       role:'DISPATCH',
       desc:'พื้นที่จัดเก็บถัง LPG ที่ผ่านการตรวจสอบ แยกตามขนาด/ลูกค้า มีระบบระบายอากาศ • ห้ามวางปนกับถังเปล่า • ห่างจากแหล่งความร้อน',
       img:'./images/conveyor.jpg'
@@ -72,13 +72,6 @@
       <h3 id="ovInfoTitle"></h3>
       <p id="ovInfoDesc"></p>
       <div class="photo-mini" id="ovInfoPhoto"></div>
-    </div>
-
-    <div class="time-control">
-      <span>⏱</span>
-      <span class="clock" id="ovClock">0.0s</span>
-      <span>|</span>
-      <span class="phase" id="ovPhase">⏳ กำลังโหลด...</span>
     </div>
 
     <svg id="ovSvg" viewBox="0 0 1600 840" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -239,6 +232,22 @@
           <stop offset="55%"  stop-color="#8fdcff" stop-opacity=".26"/>
           <stop offset="100%" stop-color="#7ad8ff" stop-opacity="0"/>
         </linearGradient>
+        <!-- Fire extinguisher (red) -->
+        <symbol id="fireExt" viewBox="0 0 20 34">
+          <ellipse cx="10" cy="32.5" rx="6" ry="1.5" fill="#000" opacity=".3"/>
+          <rect x="4" y="9" width="12" height="23" rx="4" fill="#d8302a" stroke="#7c1414" stroke-width="1"/>
+          <rect x="4.5" y="13" width="11" height="6" fill="#fff" opacity=".88"/>
+          <rect x="8" y="3" width="4" height="6" fill="#1a1d2a"/>
+          <rect x="5.5" y="1.5" width="9" height="3" rx="1" fill="#3a4258"/>
+          <path d="M13.5 4 Q19 5 17.5 11" stroke="#1a1d2a" stroke-width="1.4" fill="none"/>
+        </symbol>
+        <!-- Traffic cone (orange/white) -->
+        <symbol id="cone" viewBox="0 0 20 22">
+          <ellipse cx="10" cy="20.5" rx="9" ry="1.8" fill="#000" opacity=".3"/>
+          <polygon points="10,1 15.5,19 4.5,19" fill="#ff7a18" stroke="#c45200" stroke-width=".6"/>
+          <polygon points="8.2,8 11.8,8 12.9,13.5 7.1,13.5" fill="#fff" opacity=".92"/>
+          <rect x="2.5" y="18.5" width="15" height="3" rx="1.2" fill="#e06a10"/>
+        </symbol>
         <!-- Process-topic number badge -->
         <linearGradient id="badgeG" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stop-color="#ffb347"/>
@@ -272,10 +281,10 @@
       <rect x="700" y="450" width="380" height="200" fill="url(#padG)" opacity=".7"/>
       <rect x="1180" y="430" width="340" height="220" fill="url(#padG)" opacity=".7"/>
 
-      <!-- Asphalt road -->
-      <rect y="700" width="1600" height="56" fill="#1a1d2a"/>
+      <!-- Asphalt road (moved down, flush with the bottom) -->
+      <rect y="775" width="1600" height="65" fill="#1a1d2a"/>
       <g stroke="#ffce8a" stroke-width="3" stroke-dasharray="22 18">
-        <line x1="0" y1="728" x2="1600" y2="728"/>
+        <line x1="0" y1="807" x2="1600" y2="807"/>
       </g>
 
       <!-- Perimeter fence -->
@@ -286,6 +295,20 @@
         <g stroke-dasharray="0 14" stroke-linecap="round" stroke-width="2.5">
           <line x1="60" y1="530" x2="1540" y2="530"/>
         </g>
+      </g>
+
+      <!-- ===== STORAGE-YARD BACK FENCE — encloses the tanks in 3D (drawn BEHIND the tanks, faded for depth) ===== -->
+      <g opacity=".6">
+        <rect x="120" y="352" width="280" height="42" fill="url(#meshWire)" opacity=".22"/>
+        <rect x="116" y="350" width="288" height="5" rx="2.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".4"/>
+        <g fill="url(#fencePost)" stroke="#1f2c46" stroke-width=".4">
+          <rect x="117" y="348" width="5" height="48" rx="2"/>
+          <rect x="258" y="348" width="5" height="48" rx="2"/>
+          <rect x="398" y="348" width="5" height="48" rx="2"/>
+        </g>
+        <!-- perspective top connectors (back-top corners → front-top corners) -->
+        <line x1="120" y1="352" x2="58"  y2="382" stroke="url(#fenceRail)" stroke-width="3"/>
+        <line x1="400" y1="352" x2="456" y2="382" stroke="url(#fenceRail)" stroke-width="3"/>
       </g>
 
       <!-- ====================== STORAGE BULLET TANKS (clickable hot-zone) ====================== -->
@@ -314,6 +337,16 @@
           <line x1="120" y1="406" x2="400" y2="406" stroke="#fff" opacity=".25"/>
           <line x1="120" y1="454" x2="400" y2="454" stroke="#fff" opacity=".25"/>
           <!-- (level gauge removed — decluttered) -->
+        </g>
+
+        <!-- ===== Bullet-tank fill level — filled to the safe maximum 85% (15% vapour space) ===== -->
+        <g>
+          <rect x="122" y="396" width="276" height="83" fill="url(#liqG)" opacity=".32"/>
+          <line x1="116" y1="396" x2="404" y2="396" stroke="#7ad8ff" stroke-width="2" stroke-dasharray="7 4"/>
+          <g transform="translate(406, 386)">
+            <rect x="0" y="0" width="54" height="20" rx="3" fill="#0a2a44" stroke="#5ac8fa" stroke-width="1"/>
+            <text x="27" y="14" text-anchor="middle" font-size="12" font-weight="800" fill="#7ad8ff" font-family="Consolas,monospace">85%</text>
+          </g>
         </g>
 
         <!-- ====================== SPRINKLER WATER-DELUGE COOLING — realistic spray over the tanks ======================
@@ -355,35 +388,35 @@
       <g id="ovFence">
         <!-- ===== chain-link diamond mesh panels (galvanized, semi-transparent) =====
              Left panel x60→296 · Right panel x388→454 · gate opening between -->
-        <rect x="60"  y="256" width="236" height="308" fill="url(#meshWire)" opacity=".4"/>
-        <rect x="388" y="256" width="66"  height="308" fill="url(#meshWire)" opacity=".4"/>
-        <rect x="60"  y="256" width="236" height="308" fill="none" stroke="#5a6577" stroke-width="1" opacity=".3"/>
-        <rect x="388" y="256" width="66"  height="308" fill="none" stroke="#5a6577" stroke-width="1" opacity=".3"/>
+        <rect x="60"  y="384" width="236" height="180" fill="url(#meshWire)" opacity=".4"/>
+        <rect x="388" y="384" width="66"  height="180" fill="url(#meshWire)" opacity=".4"/>
+        <rect x="60"  y="384" width="236" height="180" fill="none" stroke="#5a6577" stroke-width="1" opacity=".3"/>
+        <rect x="388" y="384" width="66"  height="180" fill="none" stroke="#5a6577" stroke-width="1" opacity=".3"/>
 
         <!-- ===== rails (galvanized pipe): top header · mid line · bottom tension ===== -->
-        <rect x="54"  y="252" width="404" height="8" rx="4"   fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".5"/>
-        <rect x="56"  y="406" width="242" height="5" rx="2.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".4" opacity=".9"/>
-        <rect x="388" y="406" width="68"  height="5" rx="2.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".4" opacity=".9"/>
+        <rect x="54"  y="380" width="404" height="8" rx="4"   fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".5"/>
+        <rect x="56"  y="476" width="242" height="5" rx="2.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".4" opacity=".9"/>
+        <rect x="388" y="476" width="68"  height="5" rx="2.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".4" opacity=".9"/>
         <rect x="56"  y="560" width="242" height="7" rx="3.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".5"/>
         <rect x="388" y="560" width="68"  height="7" rx="3.5" fill="url(#fenceRail)" stroke="#2a3142" stroke-width=".5"/>
 
         <!-- ===== posts (galvanized pipe, cylindrical) with domed caps ===== -->
         <g stroke="#1f2c46" stroke-width=".5">
-          <rect x="57"  y="246" width="6" height="320" rx="3" fill="url(#fencePost)"/>
-          <rect x="155" y="246" width="6" height="320" rx="3" fill="url(#fencePost)"/>
-          <rect x="255" y="246" width="6" height="320" rx="3" fill="url(#fencePost)"/>
-          <rect x="451" y="246" width="6" height="320" rx="3" fill="url(#fencePost)"/>
+          <rect x="57"  y="374" width="6" height="192" rx="3" fill="url(#fencePost)"/>
+          <rect x="155" y="374" width="6" height="192" rx="3" fill="url(#fencePost)"/>
+          <rect x="255" y="374" width="6" height="192" rx="3" fill="url(#fencePost)"/>
+          <rect x="451" y="374" width="6" height="192" rx="3" fill="url(#fencePost)"/>
           <!-- gate terminal posts (a touch sturdier) -->
-          <rect x="291" y="244" width="9" height="322" rx="3" fill="url(#fencePost)"/>
-          <rect x="387" y="244" width="9" height="322" rx="3" fill="url(#fencePost)"/>
+          <rect x="291" y="372" width="9" height="194" rx="3" fill="url(#fencePost)"/>
+          <rect x="387" y="372" width="9" height="194" rx="3" fill="url(#fencePost)"/>
         </g>
         <g fill="#e7ecf4" stroke="#2a3142" stroke-width=".5">
-          <ellipse cx="60"  cy="246" rx="4"   ry="2.2"/>
-          <ellipse cx="158" cy="246" rx="4"   ry="2.2"/>
-          <ellipse cx="258" cy="246" rx="4"   ry="2.2"/>
-          <ellipse cx="454" cy="246" rx="4"   ry="2.2"/>
-          <ellipse cx="295" cy="244" rx="5.5" ry="2.6"/>
-          <ellipse cx="391" cy="244" rx="5.5" ry="2.6"/>
+          <ellipse cx="60"  cy="374" rx="4"   ry="2.2"/>
+          <ellipse cx="158" cy="374" rx="4"   ry="2.2"/>
+          <ellipse cx="258" cy="374" rx="4"   ry="2.2"/>
+          <ellipse cx="454" cy="374" rx="4"   ry="2.2"/>
+          <ellipse cx="295" cy="372" rx="5.5" ry="2.6"/>
+          <ellipse cx="391" cy="372" rx="5.5" ry="2.6"/>
         </g>
 
         <!-- ===== EMERGENCY STATION — valve sign + ESD STOP button combined into one point by the gate ===== -->
@@ -404,10 +437,10 @@
 
         <!-- ===== GATE — open framed chain-link leaf (hinged on right gate post x=391) ===== -->
         <g opacity=".95">
-          <polygon points="391,300 352,291 352,556 391,560" fill="url(#meshWire)" opacity=".55"/>
-          <polyline points="391,300 352,291 352,556 391,560" fill="none" stroke="url(#fenceRail)" stroke-width="5" stroke-linejoin="round"/>
-          <line x1="371" y1="295" x2="371" y2="558" stroke="url(#fenceRail)" stroke-width="3" opacity=".7"/>
-          <circle cx="352" cy="430" r="4" fill="#e7ecf4" stroke="#2a3142" stroke-width=".6"/>
+          <polygon points="391,386 352,378 352,556 391,560" fill="url(#meshWire)" opacity=".55"/>
+          <polyline points="391,386 352,378 352,556 391,560" fill="none" stroke="url(#fenceRail)" stroke-width="5" stroke-linejoin="round"/>
+          <line x1="371" y1="384" x2="371" y2="558" stroke="url(#fenceRail)" stroke-width="3" opacity=".7"/>
+          <circle cx="352" cy="470" r="4" fill="#e7ecf4" stroke="#2a3142" stroke-width=".6"/>
         </g>
 
         <!-- (ESD STOP button merged into the emergency station above) -->
@@ -429,8 +462,55 @@
           <rect x="-7" y="40" width="14" height="8" fill="url(#bollardR)"/>
         </g>`).join('')}
 
+        <!-- ===== Legal-style prohibition signs on the fence (red circle + slash + pictogram + Thai text) ===== -->
+        <g font-family="Sarabun,sans-serif" font-weight="700">
+          <!-- ดับเครื่องยนต์ (no running engine) -->
+          <g transform="translate(52, 388)">
+            <rect width="60" height="50" rx="3" fill="#fff" stroke="#1a1d2a" stroke-width="1"/>
+            <circle cx="30" cy="18" r="13" fill="none" stroke="#d8202a" stroke-width="3.2"/>
+            <path d="M22 20 L23.5 14.5 L35 14.5 L37 20 Z" fill="#222732"/>
+            <circle cx="25" cy="20.5" r="1.8" fill="#222732"/><circle cx="34" cy="20.5" r="1.8" fill="#222732"/>
+            <line x1="21" y1="9" x2="39" y2="27" stroke="#d8202a" stroke-width="3.2"/>
+            <text x="30" y="44" text-anchor="middle" font-size="7.5" fill="#1a1d2a">ดับเครื่องยนต์</text>
+          </g>
+          <!-- ห้ามสูบบุหรี่ (no smoking) -->
+          <g transform="translate(52, 438)">
+            <rect width="60" height="50" rx="3" fill="#fff" stroke="#1a1d2a" stroke-width="1"/>
+            <circle cx="30" cy="18" r="13" fill="none" stroke="#d8202a" stroke-width="3.2"/>
+            <rect x="21" y="17" width="15" height="2.6" rx="1" fill="#222732"/>
+            <rect x="36" y="16.3" width="3" height="4" fill="#e0602a"/>
+            <path d="M24 12 q2.5 -2.5 0 -5" stroke="#9aa3b5" stroke-width="1.1" fill="none"/>
+            <path d="M28 12 q2.5 -2.5 0 -5" stroke="#9aa3b5" stroke-width="1.1" fill="none"/>
+            <line x1="21" y1="9" x2="39" y2="27" stroke="#d8202a" stroke-width="3.2"/>
+            <text x="30" y="44" text-anchor="middle" font-size="8" fill="#1a1d2a">ห้ามสูบบุหรี่</text>
+          </g>
+          <!-- ห้ามบุคคลภายนอก (no unauthorized persons) -->
+          <g transform="translate(52, 488)">
+            <rect width="60" height="50" rx="3" fill="#fff" stroke="#1a1d2a" stroke-width="1"/>
+            <circle cx="30" cy="16" r="11" fill="none" stroke="#d8202a" stroke-width="3"/>
+            <circle cx="30" cy="11" r="2.3" fill="#222732"/>
+            <path d="M30 13.3 L30 20 M30 15 L26 18 M30 15 L34 18 M30 20 L27 25 M30 20 L33 25" stroke="#222732" stroke-width="1.7" fill="none"/>
+            <line x1="22" y1="8" x2="38" y2="24" stroke="#d8202a" stroke-width="3"/>
+            <text x="30" y="38" text-anchor="middle" font-size="7.5" fill="#1a1d2a">ห้ามบุคคล</text>
+            <text x="30" y="47" text-anchor="middle" font-size="7.5" fill="#1a1d2a">ภายนอก</text>
+          </g>
+        </g>
+
         <!-- Water-cooling system label (drawn on top of the mesh so it reads clearly) -->
-        <text class="label-sm" x="152" y="268" text-anchor="middle" font-size="12" fill="#bfe8ff">💧 ระบบน้ำลดอุณหภูมิถัง</text>
+        <text class="label-sm" x="152" y="246" text-anchor="middle" font-size="12" fill="#bfe8ff">💧 ระบบน้ำลดอุณหภูมิถัง</text>
+      </g>
+
+      <!-- Fire extinguishers HUNG on a bracket post outside the fence -->
+      <g>
+        <rect x="494" y="500" width="5" height="80" fill="#5a6577"/>
+        <ellipse cx="496" cy="580" rx="8" ry="2" fill="#000" opacity=".3"/>
+        <rect x="466" y="506" width="46" height="40" rx="2" fill="#c5232a" stroke="#7c1414" stroke-width="1"/>
+        <rect x="466" y="506" width="46" height="10" fill="#7c1414"/>
+        <text x="489" y="514" text-anchor="middle" font-size="6.5" font-weight="800" fill="#fff" font-family="Sarabun,sans-serif">ถังดับเพลิง</text>
+        <rect x="472" y="526" width="12" height="2.4" fill="#1a1d2a"/>
+        <rect x="492" y="526" width="12" height="2.4" fill="#1a1d2a"/>
+        <use href="#fireExt" x="470" y="518" width="15" height="26"/>
+        <use href="#fireExt" x="491" y="518" width="15" height="26"/>
       </g>
 
       <!-- ====================== TANK TRUCK (cab on RIGHT, faces right = direction of motion) ====================== -->
@@ -469,48 +549,55 @@
         <circle cx="285" cy="100" r="9" fill="#1a1a1a"/><circle cx="285" cy="100" r="3" fill="#6a7488"/>
       </g>
 
-      <!-- Grounding cable + earth indicator (driven by rAF). Drawn LATE so it sits over truck. -->
-      <g id="ovGround" opacity="0">
-        <!-- Cable glow halo (under) -->
-        <path d="M 360 640 L 360 690 L 320 730" stroke="#3ddc84" stroke-width="9" fill="none" stroke-linecap="round" opacity=".35"/>
-        <!-- Cable (over) -->
-        <path d="M 360 640 L 360 690 L 320 730" stroke="#7df0a8" stroke-width="5" fill="none" stroke-linecap="round"/>
-        <!-- Clamp on truck chassis -->
-        <circle cx="360" cy="640" r="8" fill="#7df0a8" stroke="#1a4221" stroke-width="2"/>
-        <circle cx="360" cy="640" r="3" fill="#1a4221"/>
-        <!-- Ground rod -->
-        <rect x="312" y="724" width="16" height="14" fill="#7df0a8" stroke="#1a4221" stroke-width="1.5"/>
-        <line x1="320" y1="730" x2="320" y2="748" stroke="#1a4221" stroke-width="2"/>
-        <!-- Thai label near grounding point (callout above the cable) -->
-        <g transform="translate(370, 660)">
-          <rect x="0" y="0" width="160" height="22" rx="4" fill="rgba(61,220,132,.95)" stroke="#1a4221" stroke-width="1.5"/>
-          <text x="80" y="15" text-anchor="middle" font-size="13" font-weight="700" fill="#04210f" font-family="Sarabun,sans-serif">⚡ เชื่อมต่อสายกราวด์</text>
-          <!-- Pointer arrow toward clamp -->
-          <path d="M 0 12 L -10 -8" stroke="#3ddc84" stroke-width="2" fill="none"/>
-        </g>
-        <!-- (EARTH CONNECTED badge removed per request) -->
+      <!-- Traffic cones — shown only while the truck is parked (placed one-by-one, controlled by rAF) -->
+      <g id="ovCones">
+        <use id="ovCone0" href="#cone" x="120" y="788" width="18" height="20" opacity="0"/>
+        <use id="ovCone1" href="#cone" x="238" y="800" width="20" height="22" opacity="0"/>
+        <use id="ovCone2" href="#cone" x="356" y="800" width="20" height="22" opacity="0"/>
+        <use id="ovCone3" href="#cone" x="468" y="788" width="18" height="20" opacity="0"/>
       </g>
 
-      <!-- Hose + flow. Connects from TOP of tanker (manifold) up to Tank-B inlet. Truck parked at translate(140,600). -->
+      <!-- Grounding cable + earth indicator (driven by rAF). Drawn LATE so it sits over truck. -->
+      <g id="ovGround" opacity="0">
+        <!-- Bonding cable from the tanker chassis to the earth rod planted at the fence -->
+        <path d="M 158 742 C 128 738, 104 682, 90 638" stroke="#3ddc84" stroke-width="8" fill="none" stroke-linecap="round" opacity=".35"/>
+        <path d="M 158 742 C 128 738, 104 682, 90 638" stroke="#7df0a8" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+        <!-- Clamp on truck chassis -->
+        <circle cx="158" cy="742" r="7" fill="#7df0a8" stroke="#1a4221" stroke-width="2"/>
+        <circle cx="158" cy="742" r="2.5" fill="#1a4221"/>
+        <!-- Earth rod planted at the fence base (left) + earth symbol -->
+        <rect x="83" y="630" width="14" height="11" rx="1" fill="#7df0a8" stroke="#1a4221" stroke-width="1.5"/>
+        <line x1="90" y1="636" x2="90" y2="658" stroke="#1a4221" stroke-width="2.5"/>
+        <g stroke="#1a4221" stroke-width="1.5">
+          <line x1="84" y1="652" x2="96" y2="652"/>
+          <line x1="86.5" y1="655.5" x2="93.5" y2="655.5"/>
+          <line x1="88.5" y1="658.5" x2="91.5" y2="658.5"/>
+        </g>
+        <!-- Callout (bottom-left, clear of bollards) -->
+        <g transform="translate(6, 660)">
+          <rect x="0" y="0" width="84" height="22" rx="4" fill="rgba(61,220,132,.96)" stroke="#1a4221" stroke-width="1.2"/>
+          <text x="42" y="15" text-anchor="middle" font-size="12.5" font-weight="700" fill="#04210f" font-family="Sarabun,sans-serif">⚡ ต่อสายดิน</text>
+          <path d="M 76 0 L 92 -24" stroke="#3ddc84" stroke-width="2" fill="none"/>
+        </g>
+      </g>
+
+      <!-- Fill hose (thin) — out the tanker REAR (left), sags to the road, then rises into the tank's left base.
+           Routed entirely to the left of/behind the truck so it never crosses the vehicle. Truck parked at translate(140,672). -->
       <g id="ovHoseGroup" opacity="0">
-        <!-- Coupling at truck-top manifold (top of tanker, when truck is at parked x=140) -->
-        <rect x="252" y="628" width="24" height="14" rx="2" fill="#5a6577" stroke="#1a1d2a" stroke-width="1.5"/>
-        <rect x="256" y="626" width="16" height="6" fill="#3a4258"/>
-        <!-- Glow halo -->
-        <path d="M 264 632 C 264 580, 290 510, 370 460" stroke="#5ac8fa" stroke-width="26" fill="none" stroke-linecap="round" opacity=".30"/>
-        <!-- Outer hose (steel braided) -->
-        <path d="M 264 632 C 264 580, 290 510, 370 460" stroke="#5a6577" stroke-width="18" fill="none" stroke-linecap="round"/>
-        <!-- Inner hose -->
-        <path d="M 264 632 C 264 580, 290 510, 370 460" stroke="#a8b3c8" stroke-width="13" fill="none" stroke-linecap="round"/>
-        <!-- Animated flow indicator -->
-        <path id="ovHoseFlow" d="M 264 632 C 264 580, 290 510, 370 460" stroke="#5ac8fa" stroke-width="8" fill="none" stroke-linecap="round" stroke-dasharray="18 14" class="flow"/>
-        <!-- INLET label + coupling at Tank-B -->
-        <rect x="362" y="453" width="24" height="14" rx="2" fill="#5a6577" stroke="#1a1d2a" stroke-width="1.5"/>
-        <rect x="366" y="451" width="16" height="4" fill="#3a4258"/>
-        <rect x="388" y="453" width="16" height="14" rx="1" fill="#a82530" stroke="#5a1015"/>
-        <!-- Flow direction arrow on hose -->
-        <g transform="translate(290, 545) rotate(-40)">
-          <polygon points="0,-10 14,0 0,10" fill="#5ac8fa" stroke="#1a4a78" stroke-width="1.5"/>
+        <!-- Discharge manifold / valve at the tanker REAR -->
+        <rect x="134" y="752" width="22" height="12" rx="2" fill="#5a6577" stroke="#1a1d2a" stroke-width="1.5"/>
+        <rect x="140" y="747" width="10" height="6" fill="#3a4258"/>
+        <!-- Hose: rear → sag to the road → rise into the tank's left base (4 layers, thin) -->
+        <path d="M 148 762 C 124 780, 106 784, 106 758 C 106 696, 128 592, 134 516" stroke="#5ac8fa" stroke-width="12" fill="none" stroke-linecap="round" opacity=".2"/>
+        <path d="M 148 762 C 124 780, 106 784, 106 758 C 106 696, 128 592, 134 516" stroke="#5a6577" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M 148 762 C 124 780, 106 784, 106 758 C 106 696, 128 592, 134 516" stroke="#aab4c6" stroke-width="5" fill="none" stroke-linecap="round"/>
+        <path d="M 148 762 C 124 780, 106 784, 106 758 C 106 696, 128 592, 134 516" stroke="#5ac8fa" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="12 10" class="flow"/>
+        <!-- Connection coupling at the tank left base -->
+        <rect x="124" y="510" width="18" height="11" rx="2" fill="#5a6577" stroke="#1a1d2a" stroke-width="1.3"/>
+        <rect x="128" y="506" width="10" height="5" fill="#3a4258"/>
+        <!-- Flow direction arrow on the rising section (up into the tank) -->
+        <g transform="translate(118, 636) rotate(-92)">
+          <polygon points="0,-7 11,0 0,7" fill="#5ac8fa" stroke="#1a4a78" stroke-width="1"/>
         </g>
       </g>
 
@@ -814,8 +901,14 @@
             ${[13,39,65,91,117].map((x,i) => `<use href="#cyl" x="${x}" y="40" width="22" height="36"/>`).join('')}
           </g>
           <rect x="100" y="36" width="100" height="20" rx="3" fill="var(--accent)"/>
-          <text x="150" y="51" text-anchor="middle" font-weight="700" fill="#1a0f00" font-size="13" font-family="Sarabun, sans-serif">โกดังเก็บถัง</text>
+          <text x="150" y="51" text-anchor="middle" font-weight="700" fill="#1a0f00" font-size="13" font-family="Sarabun, sans-serif">โรงเก็บก๊าซ</text>
         </g>
+        <!-- Fire extinguishers HUNG on the wall inside the gas store -->
+        <rect x="204" y="106" width="34" height="32" rx="2" fill="#c5232a" stroke="#7c1414" stroke-width="1"/>
+        <rect x="208" y="120" width="11" height="2" fill="#1a1d2a"/>
+        <rect x="223" y="120" width="11" height="2" fill="#1a1d2a"/>
+        <use href="#fireExt" x="207" y="111" width="13" height="23"/>
+        <use href="#fireExt" x="222" y="111" width="13" height="23"/>
       </g>
 
       <!-- (Water deluge ring removed — decluttered) -->
@@ -967,13 +1060,19 @@
           <text class="label" x="33" y="5" style="font-size:15.5px">จัดจำหน่าย</text>
         </g>
       </g>
+
+      <!-- Station title (top-center, drawn last = on top of the sky) -->
+      <g>
+        <rect x="598" y="100" width="404" height="42" rx="21" fill="#05091a" fill-opacity=".5"/>
+        <text x="800" y="129" text-anchor="middle" font-size="26" font-weight="800" fill="#ffd166" font-family="Sarabun,sans-serif" paint-order="stroke" stroke="rgba(0,0,0,.5)" stroke-width="3.5" stroke-linejoin="round">สถานีบรรจุก๊าซ LPG</text>
+      </g>
     </svg>
   `;
 
   // ============================================================
   // STATE
   // ============================================================
-  const CYCLE = 16; // seconds
+  const CYCLE = 20; // seconds (longer cycle so the truck can drive away slowly)
   let pausedAt = null;
   let pauseOffset = 0;
   let rafId = null;
@@ -984,8 +1083,7 @@
   const ground     = $('ovGround');
   const hose       = $('ovHoseGroup');
   const opr        = $('ovOpr');
-  const clock      = $('ovClock');
-  const phase      = $('ovPhase');
+  const coneEls    = [0,1,2,3].map(i => $('ovCone'+i));
 
   // Easing utilities
   const lerp = (a,b,t) => a + (b-a) * t;
@@ -1043,12 +1141,12 @@
     // ---- TRUCK POSITION ----
     // Approach 0→2s: x slides -300 → 140 (smooth ease)
     // Park    2→14s: stays at 140
-    // Depart  14→16s: x slides 140 → 1900
+    // Depart  14→20s: x slides 140 → 1700 (slow drive-away over 6s)
     let truckX;
     if (t < 2)          truckX = lerp(-300, 140, easeInOut(t / 2));
     else if (t < 14)    truckX = 140;
-    else                truckX = lerp(140, 1700, easeInOut((t-14) / 2));   // 1700, not 1900 → truck cab still onscreen at t=15.5s
-    truck.setAttribute('transform', `translate(${truckX}, 600)`);
+    else                truckX = lerp(140, 1700, easeInOut(clamp((t-14) / 6, 0, 1)));
+    truck.setAttribute('transform', `translate(${truckX}, 672)`);
 
     // ---- WORKER (operator) POSITION ----
     // Home base: (440, 610) — between pump and ESD
@@ -1058,18 +1156,18 @@
       // Home base
       oprX = 440; oprY = 610;
     } else if (t < 3){
-      // Walk to truck (440 → 320)
+      // Walk down to the (lowered) truck
       const k = (t - 2);
-      oprX = lerp(440, 320, k);
-      oprY = lerp(610, 612, k);
+      oprX = lerp(440, 300, k);
+      oprY = lerp(610, 735, k);
     } else if (t < 13){
       // Stay near truck
-      oprX = 320; oprY = 612;
+      oprX = 300; oprY = 735;
     } else if (t < 14){
-      // Walk back home (320 → 440)
+      // Walk back home
       const k = (t - 13);
-      oprX = lerp(320, 440, k);
-      oprY = lerp(612, 610, k);
+      oprX = lerp(300, 440, k);
+      oprY = lerp(735, 610, k);
     } else {
       oprX = 440; oprY = 610;
     }
@@ -1085,6 +1183,11 @@
     const hoseVis = (t >= 4.5 && t < 12) ? 1 : 0;
     hose.setAttribute('opacity', hoseVis);
 
+    // ---- TRAFFIC CONES — placed one-by-one shortly after the truck parks; removed when it leaves ----
+    for (let i = 0; i < 4; i++){
+      if (coneEls[i]) coneEls[i].setAttribute('opacity', (t >= 3 + i * 0.6 && t < 14) ? 1 : 0);
+    }
+
     // ---- TRUCK LIQUID LEVEL (tanker empties during unload; storage-tank gauges removed) ----
     let truckLiqHeight = 40;
     if (t < 5.5)       truckLiqHeight = 40;
@@ -1092,19 +1195,6 @@
     else               truckLiqHeight = 8;
     truckLiq.setAttribute('height', truckLiqHeight);
     truckLiq.setAttribute('y', 100 - truckLiqHeight);
-
-    // ---- CLOCK + PHASE INDICATOR ----
-    clock.textContent = t.toFixed(1) + 's';
-    let phaseTxt;
-    if      (t < 2)    phaseTxt = '🚛 รถบรรทุก LPG เข้าจอด';
-    else if (t < 3)    phaseTxt = '👷 พนักงานเดินไปต่อสายดิน';
-    else if (t < 4.5)  phaseTxt = '⚡ ต่อสายดิน Earthing R<10Ω';
-    else if (t < 5.5)  phaseTxt = '🔧 ต่อสายส่ง LPG';
-    else if (t < 12)   phaseTxt = '💧 กำลังถ่าย LPG เข้าถังเก็บ';
-    else if (t < 13)   phaseTxt = '🔧 ถอดสายส่ง LPG';
-    else if (t < 14)   phaseTxt = '👷 ถอดสายดิน + เดินกลับสถานี';
-    else               phaseTxt = '🚛 รถบรรทุกออกจากโรงงาน';
-    phase.textContent = phaseTxt;
 
     rafId = requestAnimationFrame(update);
   }
