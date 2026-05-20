@@ -76,7 +76,7 @@
       <text x="${cx}" y="${bodyTop + 30 + h*0.10}" text-anchor="middle" font-family="Sarabun,sans-serif"
         font-size="${Math.round(w/6)}" font-weight="800" fill="#fff" opacity=".45">LPG</text>
       <text x="${cx}" y="${bodyTop + 30 + h*0.16}" text-anchor="middle" font-family="Consolas,monospace"
-        font-size="${Math.round(w/12)}" fill="#fff" opacity=".35">15 kg • TIS 27</text>
+        font-size="${Math.round(w/12)}" fill="#fff" opacity=".35">15 kg </text>
       <!-- Cutaway window for liquid level (if liqPct > 0) -->
       ${liqPct > 0 ? `
         <clipPath id="stClip${cx}_${cy}">
@@ -137,23 +137,22 @@
     const calloutX = 750;
     const calloutW = 780;
     const points = [
-      { id:1, label:'วาล์วมือหมุน (Hand-wheel)',  desc:'วาล์วทองเหลืองตามมอก. 151-2553 • หมุนปิดสนิท • O-ring ยางสภาพดี ไม่กรอบ ไม่แตกร้าว',
+      { id:1, label:'วาล์วทองเหลือง',  desc:'',
         cylX:cx,             cylY:yTop - 14, calloutY:170 },
-      { id:2, label:'ป้าย Name plate',    desc:'อ่านรหัสรุ่น • วันที่ผลิต • น้ำหนัก Tare (ปั๊มสลักที่หูถัง/ห่วงหิ้ว) • มอก. 27-2562',
+      { id:2, label:'ป้าย Name plate',    desc:'',
         cylX:cx + w/2 - 20,  cylY:bodyTop + 80, calloutY:270 },
-      { id:3, label:'ตัวถัง (Body)',      desc:'ตรวจรอยบุบ รอยผุ สนิม รอยเชื่อม • รอยลึกเกิน 5 มม. หรือพื้นที่ผุเกิน 1% → ห้ามใช้งาน',
+      { id:3, label:'ตัวถัง (Body)',      desc:'',
         cylX:cx,             cylY:bodyTop + 160, calloutY:370 },
-      { id:4, label:'Re-test stamp',      desc:'วันที่ตรวจสอบ Hydrostatic ครั้งหลังสุด • ระยะตรวจสอบไม่เกิน 5 ปี ตามกฎกระทรวง',
+      { id:4, label:'Re-test stamp',      desc:'',
         cylX:cx + w/2 - 30,  cylY:bodyTop + 240, calloutY:470 },
-      { id:5, label:'ขาตั้ง Foot ring',   desc:'ฐานล่างมั่นคง ไม่บิดเบี้ยว ตั้งตรงได้ ไม่โยก • ไม่มีรอยกระแทกเสียรูป',
-        cylX:cx,             cylY:yBot - 6, calloutY:570 }
+      
     ];
 
     stage.innerHTML = `
       <svg viewBox="${VIEWBOX}" preserveAspectRatio="xMidYMid meet">
         ${SHARED_DEFS}
         <rect width="1600" height="840" fill="url(#stSky)"/>
-        ${stepHeader(1, 'ตรวจสภาพถัง', 'Cylinder Inspection — visual check of 5 critical points')}
+        ${stepHeader(1, 'ตรวจสภาพถัง', '')}
 
         <!-- Big cylinder on LEFT -->
         <g filter="url(#stShadow)">${bigCylinder(cx, cy, w, h, {liqPct:0})}</g>
@@ -302,7 +301,7 @@
       <svg viewBox="${VIEWBOX}" preserveAspectRatio="xMidYMid meet">
         ${SHARED_DEFS}
         <rect width="1600" height="840" fill="url(#stSky)"/>
-        ${stepHeader(2, 'ชั่งน้ำหนักถังเปล่า (Tare)', 'Weigh empty cylinder — record tare weight for fill calculation')}
+        ${stepHeader(2, 'ชั่งน้ำหนักถังเปล่า', '')}
 
         <!-- Cylinder on scale (left) -->
         <g filter="url(#stShadow)">${bigCylinder(500, 400, 200, 400, {liqPct:0})}</g>
@@ -322,7 +321,7 @@
         <g filter="url(#stShadow)">
           <rect x="850" y="280" width="640" height="320" rx="14" fill="#0a1322" stroke="#3a4258" stroke-width="3"/>
           <rect x="850" y="280" width="640" height="50" fill="#1a1d2a"/>
-          <text x="1170" y="313" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="22" font-weight="700" fill="var(--liquid)">TARE WEIGHT • น้ำหนักถังเปล่า</text>
+          <text x="1170" y="313" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="22" font-weight="700" fill="var(--liquid)">น้ำหนักถังเปล่า</text>
 
           <!-- 7-segment style readout -->
           <rect x="900" y="360" width="540" height="160" rx="8" fill="#000"/>
@@ -330,15 +329,15 @@
           <text x="1380" y="488" font-family="Sarabun,sans-serif" font-size="36" fill="var(--good)" opacity=".75">kg</text>
 
           <!-- Sub info -->
-          <text x="900" y="555" font-family="Sarabun,sans-serif" font-size="16" fill="var(--muted)">Target = Tare + 15.0 kg (Net) = </text>
-          <text x="1280" y="555" font-family="Consolas,monospace" font-size="22" font-weight="700" fill="var(--accent)">29.5 kg</text>
+          <text x="900" y="555" font-family="Sarabun,sans-serif" font-size="16" fill="var(--muted)"> </text>
+          <text x="1280" y="555" font-family="Consolas,monospace" font-size="22" font-weight="700" fill="var(--accent)"></text>
 
           <text id="st2Status" x="1170" y="585" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="14" fill="var(--muted)">⏳ กำลังชั่ง...</text>
         </g>
 
         <!-- Status bar at bottom -->
         <rect x="40" y="760" width="1520" height="60" rx="10" fill="rgba(8,14,28,.9)" stroke="var(--line)" stroke-width="1.5"/>
-        <text x="800" y="800" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="20" font-weight="600" fill="var(--ink-2)">น้ำหนัก Tare ที่ชั่งได้ต้องตรงกับเลขที่ปั๊มสลักไว้บนหูถัง ±0.1 kg • หากเพี้ยน → ส่งซ่อม</text>
+        <text x="800" y="800" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="20" font-weight="600" fill="var(--ink-2)"></text>
       </svg>
     `;
   }
@@ -365,7 +364,7 @@
       } else {
         display.textContent = target.toFixed(1);
         display.setAttribute('fill', 'var(--good)');
-        if (status){ status.textContent = '✓ TARE = 14.5 kg • บันทึกค่าแล้ว'; status.setAttribute('fill','var(--good)'); }
+        if (status){ status.textContent = ''; status.setAttribute('fill','var(--good)'); }
       }
       st2Raf = requestAnimationFrame(tick);
     }
@@ -382,7 +381,7 @@
       <svg viewBox="${VIEWBOX}" preserveAspectRatio="xMidYMid meet">
         ${SHARED_DEFS}
         <rect width="1600" height="840" fill="url(#stSky)"/>
-        ${stepHeader(3, 'อัด LPG เข้าถัง', 'Filling — liquid LPG enters cylinder, vapor returns, weight-controlled cutoff')}
+        ${stepHeader(3, 'อัด LPG เข้าถัง', '')}
 
         <!-- Filling head from above (moved down 40px so it doesn't overlap title/subtitle) -->
         <g filter="url(#stShadow)">
@@ -396,7 +395,7 @@
           <!-- Vapor return pipe (to the right, exits) -->
           <rect x="490" y="260" width="10" height="2" fill="#7d8aa3"/>
           <path d="M 530 290 L 620 290 L 620 170" stroke="#7d8aa3" stroke-width="12" fill="none" stroke-linecap="round"/>
-          <text x="640" y="160" font-family="Sarabun,sans-serif" font-size="15" font-weight="700" fill="var(--vapor)">⬆ ไอกลับ Vapor return</text>
+          <text x="640" y="160" font-family="Sarabun,sans-serif" font-size="15" font-weight="700" fill="var(--vapor)"></text>
           <!-- Animated vapor puffs going up the return pipe -->
           <circle cx="626" cy="200" r="4" fill="var(--vapor)" opacity=".7">
             <animate attributeName="cy" values="290;170" dur="1.4s" repeatCount="indefinite"/>
@@ -444,16 +443,16 @@
           <!-- Progress bar -->
           <rect x="900" y="510" width="540" height="22" rx="4" fill="#1a1d2a" stroke="#3a4258"/>
           <rect id="st3Bar" x="900" y="510" width="0" height="22" rx="4" fill="var(--accent)"/>
-          <text x="900" y="552" font-family="Sarabun,sans-serif" font-size="14" fill="var(--muted)">เป้าหมาย Target: <tspan fill="var(--accent)" font-weight="700">29.5 kg</tspan></text>
+          <text x="900" y="552" font-family="Sarabun,sans-serif" font-size="14" fill="var(--muted)"" font-weight="700"></tspan></text>
           <text id="st3Status" x="1440" y="552" text-anchor="end" font-family="Sarabun,sans-serif" font-size="14" fill="var(--muted)">⏳ ไหลเข้า...</text>
 
           <!-- Pressure indicator -->
-          <text x="900" y="585" font-family="Sarabun,sans-serif" font-size="13" fill="var(--muted)">แรงดันปั๊ม: <tspan fill="var(--good)" font-weight="700">8.5 bar</tspan></text>
+          <text x="900" y="585" font-family="Sarabun,sans-serif" font-size="13" fill="var(--muted)"><tspan fill="var(--good)" font-weight="700">บรรจุไม่เกิน 85%</tspan></text>
         </g>
 
         <!-- Status bar at bottom -->
         <rect x="40" y="760" width="1520" height="60" rx="10" fill="rgba(8,14,28,.9)" stroke="var(--line)" stroke-width="1.5"/>
-        <text id="st3StatusBottom" x="800" y="800" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="19" font-weight="600" fill="var(--ink-2)">⚠ บรรจุ net 15 kg = ~85% ปริมาตรถัง (เผื่อ vapor space 15% ขยายตัวเมื่อร้อน) • ระบบตัดอัตโนมัติที่ 29.5 kg</text>
+        <text id="st3StatusBottom" x="800" y="800" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="19" font-weight="600" fill="var(--ink-2)"></text>
       </svg>
     `;
   }
@@ -511,7 +510,7 @@
       <svg viewBox="${VIEWBOX}" preserveAspectRatio="xMidYMid meet">
         ${SHARED_DEFS}
         <rect width="1600" height="840" fill="url(#stSky)"/>
-        ${stepHeader(4, 'ชั่งซ้ำหลังบรรจุ', 'Check-weigh — verify final weight per พ.ร.บ. ชั่งตวงวัด ±0.5%')}
+        ${stepHeader(4, 'ชั่งซ้ำหลังบรรจุ', '')}
 
         <!-- Filled cylinder on check-weigher (left) -->
         <g filter="url(#stShadow)">${bigCylinder(500, 400, 200, 400, {liqPct:0.82})}</g>
@@ -532,24 +531,24 @@
         <g filter="url(#stShadow)">
           <rect x="850" y="240" width="640" height="380" rx="14" fill="#0a1322" stroke="#3a4258" stroke-width="3"/>
           <rect x="850" y="240" width="640" height="50" fill="#1a1d2a"/>
-          <text x="1170" y="273" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="22" font-weight="700" fill="var(--liquid)">CHECK-WEIGHER • ชั่งซ้ำ</text>
+          <text x="1170" y="273" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="22" font-weight="700" fill="var(--liquid)">ตรวจสอบน้ำหนักรวม LPG</text>
 
           <rect x="900" y="320" width="540" height="160" rx="8" fill="#000"/>
           <text id="st4Display" x="1170" y="448" text-anchor="middle" font-family="Consolas,monospace" font-size="110" font-weight="800" fill="var(--good)">--.- </text>
           <text x="1380" y="448" font-family="Sarabun,sans-serif" font-size="36" fill="var(--good)" opacity=".75">kg</text>
 
           <!-- Tolerance bar -->
-          <text x="900" y="510" font-family="Sarabun,sans-serif" font-size="14" fill="var(--muted)">Tolerance: 29.4 — 29.6 kg (พ.ร.บ.ชั่งตวงวัด 2542: ±0.5% net)</text>
+          <text x="900" y="510" font-family="Sarabun,sans-serif" font-size="14" fill="var(--muted)"></text>
           <!-- Pass/Reject indicator -->
           <rect x="900" y="525" width="540" height="50" rx="8" fill="#1a1d2a" stroke="#3a4258"/>
           <text id="st4Result" x="1170" y="558" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="22" font-weight="800" fill="var(--muted)">⏳ ตรวจสอบ...</text>
 
-          <text x="900" y="600" font-family="Sarabun,sans-serif" font-size="13" fill="var(--muted)">หากเกิน tolerance → ส่งช่องคัดออก (reject lane) เพื่อแก้ไข</text>
+          <text x="900" y="600" font-family="Sarabun,sans-serif" font-size="13" fill="var(--muted)"></text>
         </g>
 
         <!-- Status bar at bottom -->
         <rect x="40" y="760" width="1520" height="60" rx="10" fill="rgba(8,14,28,.9)" stroke="var(--line)" stroke-width="1.5"/>
-        <text x="800" y="800" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="20" font-weight="600" fill="var(--ink-2)">การชั่งซ้ำเป็นการตรวจซ้ำ (double-check) — ตามพ.ร.บ. ชั่งตวงวัด ลูกค้าและกฎหมายไม่ยอมให้คลาดเคลื่อน</text>
+        <text x="800" y="800" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="20" font-weight="600" fill="var(--ink-2)"></text>
       </svg>
     `;
   }
@@ -573,7 +572,7 @@
         if (result){ result.textContent = '⏳ ตรวจสอบ...'; result.setAttribute('fill', 'var(--muted)'); }
       } else {
         display.textContent = '29.5';
-        if (result){ result.textContent = '✓ PASS — น้ำหนักตรงตามมาตรฐาน (29.5 ± 0.0 kg)'; result.setAttribute('fill', 'var(--good)'); }
+        if (result){ result.textContent = ''; result.setAttribute('fill', 'var(--good)'); }
       }
       st4Raf = requestAnimationFrame(tick);
     }
@@ -590,7 +589,7 @@
       <svg viewBox="${VIEWBOX}" preserveAspectRatio="xMidYMid meet">
         ${SHARED_DEFS}
         <rect width="1600" height="840" fill="url(#stSky)"/>
-        ${stepHeader(5, 'ทดสอบรอยรั่ว', 'Leak Test — 3 sensors check O-ring, valve seat, body welds')}
+        ${stepHeader(5, 'ทดสอบการรั่วซึม', '')}
 
         <!-- Leak detection booth (enclosure around cylinder) -->
         <g filter="url(#stShadow)">
@@ -598,7 +597,7 @@
           <rect x="280" y="200" width="500" height="540" rx="12" fill="rgba(8,14,28,.4)" stroke="#5a6577" stroke-width="3"/>
           <!-- Booth header -->
           <rect x="280" y="200" width="500" height="50" fill="#1a1d2a"/>
-          <text x="530" y="232" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="20" font-weight="700" fill="var(--liquid)">LEAK DETECTION CHAMBER</text>
+          <text x="530" y="232" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="20" font-weight="700" fill="var(--liquid)">ทดสอบด้วยฟองสบู่ หรือน้ำ</text>
           <!-- Vent hood on top -->
           <polygon points="380,200 530,170 680,200" fill="#3a4258"/>
           <rect x="520" y="140" width="20" height="40" fill="#7d8aa3"/>
@@ -608,57 +607,7 @@
         <g filter="url(#stShadow)">${bigCylinder(530, 480, 180, 380, {liqPct:0.82})}</g>
 
         <!-- 3 SENSOR PROBES + status indicators -->
-        <!-- Sensor 1: O-ring (near valve, top) -->
-        <g id="st5Sensor1">
-          <line x1="350" y1="280" x2="430" y2="295" stroke="#5a6577" stroke-width="6" stroke-linecap="round"/>
-          <rect x="320" y="270" width="30" height="20" rx="3" fill="#3a4258" stroke="#0a1322" stroke-width="1"/>
-          <text x="335" y="284" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="var(--liquid)">S1</text>
-          <!-- Status -->
-          <circle id="st5S1Light" cx="225" cy="280" r="14" fill="#3a4258" stroke="#0a1322" stroke-width="2"/>
-          <text id="st5S1Tick" x="225" y="288" text-anchor="middle" font-size="20" font-weight="800" fill="#fff" opacity="0">✓</text>
-          <text x="100" y="270" font-family="Sarabun,sans-serif" font-size="14" font-weight="700" fill="var(--ink)">SENSOR 1</text>
-          <text x="100" y="288" font-family="Sarabun,sans-serif" font-size="11" fill="var(--muted)">ตรวจ O-ring คอวาล์ว</text>
-        </g>
 
-        <!-- Sensor 2: Valve seat -->
-        <g id="st5Sensor2">
-          <line x1="730" y1="320" x2="680" y2="335" stroke="#5a6577" stroke-width="6" stroke-linecap="round"/>
-          <rect x="730" y="310" width="30" height="20" rx="3" fill="#3a4258" stroke="#0a1322" stroke-width="1"/>
-          <text x="745" y="324" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="var(--liquid)">S2</text>
-          <circle id="st5S2Light" cx="845" cy="320" r="14" fill="#3a4258" stroke="#0a1322" stroke-width="2"/>
-          <text id="st5S2Tick" x="845" y="328" text-anchor="middle" font-size="20" font-weight="800" fill="#fff" opacity="0">✓</text>
-          <text x="870" y="310" font-family="Sarabun,sans-serif" font-size="14" font-weight="700" fill="var(--ink)">SENSOR 2</text>
-          <text x="870" y="328" font-family="Sarabun,sans-serif" font-size="11" fill="var(--muted)">ตรวจบ่าวาล์ว (valve seat)</text>
-        </g>
-
-        <!-- Sensor 3: Body welds -->
-        <g id="st5Sensor3">
-          <line x1="350" y1="600" x2="430" y2="585" stroke="#5a6577" stroke-width="6" stroke-linecap="round"/>
-          <rect x="320" y="590" width="30" height="20" rx="3" fill="#3a4258" stroke="#0a1322" stroke-width="1"/>
-          <text x="335" y="604" text-anchor="middle" font-family="Consolas,monospace" font-size="10" fill="var(--liquid)">S3</text>
-          <circle id="st5S3Light" cx="225" cy="600" r="14" fill="#3a4258" stroke="#0a1322" stroke-width="2"/>
-          <text id="st5S3Tick" x="225" y="608" text-anchor="middle" font-size="20" font-weight="800" fill="#fff" opacity="0">✓</text>
-          <text x="100" y="590" font-family="Sarabun,sans-serif" font-size="14" font-weight="700" fill="var(--ink)">SENSOR 3</text>
-          <text x="100" y="608" font-family="Sarabun,sans-serif" font-size="11" fill="var(--muted)">ตรวจรอยเชื่อมตัวถัง</text>
-        </g>
-
-        <!-- Display panel (right) -->
-        <g filter="url(#stShadow)">
-          <rect x="950" y="370" width="540" height="280" rx="14" fill="#0a1322" stroke="#3a4258" stroke-width="3"/>
-          <rect x="950" y="370" width="540" height="50" fill="#1a1d2a"/>
-          <text x="1220" y="403" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="22" font-weight="700" fill="var(--liquid)">PPM READING</text>
-
-          <rect x="1000" y="450" width="440" height="120" rx="8" fill="#000"/>
-          <text id="st5Display" x="1220" y="538" text-anchor="middle" font-family="Consolas,monospace" font-size="88" font-weight="800" fill="var(--good)">0</text>
-          <text x="1380" y="538" font-family="Sarabun,sans-serif" font-size="28" fill="var(--good)" opacity=".75">ppm</text>
-
-          <text id="st5Result" x="1220" y="618" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="20" font-weight="800" fill="var(--muted)">⏳ ทดสอบ...</text>
-        </g>
-
-        <!-- Status bar at bottom -->
-        <rect x="40" y="760" width="1520" height="60" rx="10" fill="rgba(8,14,28,.9)" stroke="var(--line)" stroke-width="1.5"/>
-        <text x="800" y="800" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="20" font-weight="600" fill="var(--ink-2)">⚠ รั่ว ≥ 100 ppm = REJECT • ส่งกลับเปลี่ยน O-ring แล้วทดสอบใหม่</text>
-      </svg>
     `;
   }
 
@@ -724,7 +673,7 @@
       <svg viewBox="${VIEWBOX}" preserveAspectRatio="xMidYMid meet">
         ${SHARED_DEFS}
         <rect width="1600" height="840" fill="url(#stSky)"/>
-        ${stepHeader(6, 'ปิดซีล + อุปกรณ์บนหัวถัง', 'Apply plastic dust cap, heat-shrink tamper seal, hang tag, final QC')}
+        ${stepHeader(6, 'ปิดซีล + อุปกรณ์บนหัวถัง', '')}
 
         <!-- Cylinder (filled) with painted brand (NOT a sticker — Thai cylinders are painted) -->
         <g filter="url(#stShadow)">${bigCylinder(cx, cy, w, h, {liqPct:0.82})}</g>
@@ -791,31 +740,7 @@
           <rect x="4" y="38" width="8" height="14" fill="#1a1d2a"/>
         </g>
 
-        <!-- Checklist panel on right (Thai-correct content) -->
-        <g filter="url(#stShadow)">
-          <rect x="900" y="180" width="640" height="420" rx="14" fill="#0a1322" stroke="#3a4258" stroke-width="3"/>
-          <rect x="900" y="180" width="640" height="50" fill="#1a1d2a"/>
-          <text x="1220" y="213" text-anchor="middle" font-family="Sarabun,sans-serif" font-size="22" font-weight="700" fill="var(--liquid)">✓ ขั้นตอนปิดซีลถัง LPG</text>
-
-          ${[
-            { id:1, label:'ฝาครอบวาล์วพลาสติก',    desc:'Plastic Dust Cap — กันฝุ่นและกันการกระแทกที่ตัววาล์ว', y:255 },
-            { id:2, label:'ซีลพลาสติกหด',           desc:'Heat-Shrink Tamper Seal — รัดรอบคอวาล์ว ฉีกขาดเมื่อถูกแกะ', y:340 },
-            { id:3, label:'ป้ายห้อย (Hang Tag)',    desc:'ผู้บรรจุ • Lot • วันที่บรรจุ • น้ำหนัก — สำหรับ traceability', y:425 },
-            { id:4, label:'ตรวจขั้นสุดท้าย QC',     desc:'ตรวจสายตา • รอยรั่ว • ความสมบูรณ์ของซีล • ผ่านแล้วส่งโกดัง', y:510 }
-          ].map(item => `
-            <g id="st6Item${item.id}" opacity=".45">
-              <rect x="930" y="${item.y}" width="580" height="64" rx="8" fill="rgba(255,255,255,.03)" stroke="var(--line)"/>
-              <circle cx="970" cy="${item.y + 32}" r="22" fill="var(--accent)" stroke="#1a0f00" stroke-width="2"/>
-              <text x="970" y="${item.y + 41}" text-anchor="middle" font-family="Consolas,monospace" font-size="20" font-weight="800" fill="#1a0f00">${item.id}</text>
-              <text x="1010" y="${item.y + 26}" font-family="Sarabun,sans-serif" font-size="18" font-weight="700" fill="var(--ink)">${item.label}</text>
-              <text x="1010" y="${item.y + 50}" font-family="Sarabun,sans-serif" font-size="13" fill="var(--ink-2)">${item.desc}</text>
-              <g id="st6Check${item.id}" opacity="0">
-                <circle cx="1475" cy="${item.y + 32}" r="22" fill="var(--good)"/>
-                <text x="1475" y="${item.y + 41}" text-anchor="middle" font-size="24" font-weight="800" fill="#04210f">✓</text>
-              </g>
-            </g>
-          `).join('')}
-        </g>
+        
 
         <!-- Status bar at bottom -->
         <rect x="40" y="760" width="1520" height="60" rx="10" fill="rgba(8,14,28,.9)" stroke="var(--line)" stroke-width="1.5"/>
@@ -832,7 +757,7 @@
     const dur = 2200;
     const total = 4;
     const ids = ['Cap','Seal','Tag','QC'];
-    const labels = ['ฝาครอบวาล์วพลาสติก','ซีลพลาสติกหดกันแกะ','ป้ายห้อย (Hang Tag)','ตรวจขั้นสุดท้าย QC'];
+
     function tick(t){
       const elapsed = (t - start) % (dur * total + 4000);
       const idx = Math.min(total - 1, Math.floor(elapsed / dur));
@@ -852,7 +777,7 @@
       const status = document.getElementById('st6Status');
       if (status){
         if (isComplete){
-          status.textContent = '✓ ปิดซีลครบทุกขั้น — พร้อมส่งคลังจำหน่าย';
+          status.textContent = '';
           status.setAttribute('fill', 'var(--good)');
         } else {
           status.textContent = `🔧 (${idx+1}/4) ${labels[idx]}`;
@@ -876,7 +801,7 @@
       <svg viewBox="${VIEWBOX}" preserveAspectRatio="xMidYMid meet">
         ${SHARED_DEFS}
         <rect width="1600" height="840" fill="url(#stSky)"/>
-        ${stepHeader(7, 'จัดจำหน่ายสู่ตลาด', 'Distribution — load cylinders onto delivery truck, send to dealers / customers')}
+        ${stepHeader(7, 'จัดจำหน่ายสู่ตลาด', '')}
 
         <!-- Ground -->
         <rect y="640" width="1600" height="200" fill="#1a1d2a"/>
@@ -975,14 +900,6 @@
           <circle cx="170" cy="660" r="14" fill="#1a1a1a"/><circle cx="170" cy="660" r="4" fill="#6a7488"/>
           <circle cx="240" cy="660" r="14" fill="#1a1a1a"/><circle cx="240" cy="660" r="4" fill="#6a7488"/>
           <circle cx="340" cy="660" r="14" fill="#1a1a1a"/><circle cx="340" cy="660" r="4" fill="#6a7488"/>
-        </g>
-
-        <!-- Stats panel (top-right) -->
-        <g filter="url(#stShadow)">
-          <rect x="800" y="120" width="280" height="90" rx="10" fill="rgba(8,14,28,.9)" stroke="var(--accent)" stroke-width="2"/>
-          <text x="820" y="148" font-family="Sarabun,sans-serif" font-size="14" fill="var(--muted)">ปริมาณการกระจาย</text>
-          <text x="820" y="180" font-family="Consolas,monospace" font-size="28" font-weight="800" fill="var(--accent)">600 – 1,500</text>
-          <text x="820" y="200" font-family="Sarabun,sans-serif" font-size="13" fill="var(--ink-2)">ถัง / วัน</text>
         </g>
 
         <!-- Status bar at bottom -->

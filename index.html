@@ -24,60 +24,34 @@
     </div>
   </div>
 
-  <!-- Step navigation bar: Overview + 7 detail steps -->
-  <nav class="step-nav" id="stepNav">
-    <button class="step-tab overview-tab active" data-view="overview">📍 ภาพรวม</button>
-    <span class="sep">›</span>
-    <button class="step-tab" data-view="step1">1. ตรวจสภาพถัง</button>
-    <button class="step-tab" data-view="step2">2. ชั่งน้ำหนักถังเปล่า</button>
-    <button class="step-tab" data-view="step3">3. อัด LPG</button>
-    <button class="step-tab" data-view="step4">4. ชั่งซ้ำหลังบรรจุ</button>
-    <button class="step-tab" data-view="step5">5. ทดสอบรอยรั่ว</button>
-    <button class="step-tab" data-view="step6">6. ปิดซีล + อุปกรณ์</button>
-    <button class="step-tab" data-view="step7">7. จัดจำหน่าย</button>
-  </nav>
+  <!-- Process steps banner (7 stages of LPG bottling) -->
+  <div class="process-banner" id="processBanner">
+    <div class="process-step"><span class="num">1</span><span class="label">ตรวจสภาพถัง</span></div>
+    <span class="flow-arrow">›</span>
+    <div class="process-step"><span class="num">2</span><span class="label">ชั่งน้ำหนักถังเปล่า</span></div>
+    <span class="flow-arrow">›</span>
+    <div class="process-step"><span class="num">3</span><span class="label">อัด LPG เข้าถัง</span></div>
+    <span class="flow-arrow">›</span>
+    <div class="process-step"><span class="num">4</span><span class="label">ชั่งซ้ำหลังบรรจุ</span></div>
+    <span class="flow-arrow">›</span>
+    <div class="process-step"><span class="num">5</span><span class="label">ทดสอบรอยรั่ว</span></div>
+    <span class="flow-arrow">›</span>
+    <div class="process-step"><span class="num">6</span><span class="label">ปิดซีล + อุปกรณ์</span></div>
+    <span class="flow-arrow">›</span>
+    <div class="process-step"><span class="num">7</span><span class="label">จัดจำหน่าย</span></div>
+  </div>
 </header>
 
-<!-- Main stage (fills viewport) — 6 views: overview + 5 close-up steps -->
+<!-- Main stage (fills viewport) -->
 <main class="ppt-main">
   <section class="scene active" data-scene="overview">
-    <!-- View 0: Overview (built by scene1.js) -->
-    <div class="step-view active" data-view="overview">
-      <div class="stage" id="stageOverview"><!-- populated by scene1.js --></div>
-    </div>
-    <!-- View 1-5: Close-up steps (built by steps.js) -->
-    <div class="step-view" data-view="step1">
-      <div class="stage" id="stageStep1"></div>
-    </div>
-    <div class="step-view" data-view="step2">
-      <div class="stage" id="stageStep2"></div>
-    </div>
-    <div class="step-view" data-view="step3">
-      <div class="stage" id="stageStep3"></div>
-    </div>
-    <div class="step-view" data-view="step4">
-      <div class="stage" id="stageStep4"></div>
-    </div>
-    <div class="step-view" data-view="step5">
-      <div class="stage" id="stageStep5"></div>
-    </div>
-    <div class="step-view" data-view="step6">
-      <div class="stage" id="stageStep6"></div>
-    </div>
-    <div class="step-view" data-view="step7">
-      <div class="stage" id="stageStep7"></div>
-    </div>
-
-    <!-- Big floating Prev/Next arrows (always visible, easy to click during presentation) -->
-    <button class="nav-arrow nav-prev" id="btnPrev" title="ก่อนหน้า (←)" aria-label="ก่อนหน้า">◀</button>
-    <button class="nav-arrow nav-next" id="btnNext" title="ถัดไป (→)" aria-label="ถัดไป">▶</button>
+    <div class="stage" id="stageOverview"><!-- populated by scene1.js --></div>
   </section>
 </main>
 
 <!-- Scripts -->
 <script src="./js/app.js"></script>
 <script src="./js/scene1.js"></script>
-<script src="./js/steps.js"></script>
 
 </body>
 </html>

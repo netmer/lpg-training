@@ -47,12 +47,6 @@
       desc:'ปั๊มหอยโข่งดูดของเหลวจากถังเก็บส่งไปยังหัวบรรจุ ใช้ใบพัดหมุนสร้างความดัน 8-10 บาร์ มี mechanical seal ทนของเหลว LPG และวาล์วบายพาส (by-pass valve) ป้องกัน dead-head',
       img:'./images/pump.jpg'
     },
-    compressor: {
-      title:'คอมเพรสเซอร์ไอ (Vapor Compressor)',
-      role:'TRANSFER',
-      desc:'อัดไอ LPG ระหว่างถ่ายเทเหลวจากรถขนส่งไปถังเก็บ สร้างความดันต่างให้ของเหลวไหลได้ เป็นแบบ reciprocating piston หรือ sliding vane',
-      img:'./images/compressor.jpg'
-    },
     carousel: {
       title:'แท่นบรรจุหมุน (Filling Carousel)',
       role:'FILLING',
@@ -212,6 +206,10 @@
           <feComponentTransfer><feFuncA type="linear" slope="0.45"/></feComponentTransfer>
           <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
+        <!-- Chain-link fence mesh pattern -->
+        <pattern id="chainlink" width="14" height="14" patternUnits="userSpaceOnUse">
+          <path d="M0,0 L14,14 M14,0 L0,14" stroke="#8a97ad" stroke-width="1" fill="none"/>
+        </pattern>
       </defs>
 
       <!-- ====================== SKY ====================== -->
@@ -316,6 +314,54 @@
         <text class="label-sm" x="170" y="560" text-anchor="middle">Storage Bullet Yard</text>
       </g>
 
+      <!-- ====================== STORAGE YARD FENCE (รั้วล้อมถัง) + GATE + ESD ======================
+           Chain-link fence enclosing the bullet tank yard. Gate opening on the front-bottom,
+           ESD emergency-stop button mounted on the right gate post (per safe-access design). -->
+      <g id="ovFence">
+        <!-- Chain-link mesh fill (semi-transparent, behind posts) -->
+        <rect x="58" y="250" width="396" height="326" fill="url(#chainlink)" opacity=".22"/>
+        <!-- Gate opening: clear the mesh in the gate gap (x=300-388 on the bottom) by overlaying sky-color -->
+        <rect x="300" y="500" width="88" height="80" fill="url(#groundG)" opacity=".9"/>
+
+        <!-- Top rail + bottom rails (with gate gap) -->
+        <line x1="56" y1="250" x2="456" y2="250" stroke="#7d8aa3" stroke-width="3"/>
+        <line x1="56" y1="263" x2="456" y2="263" stroke="#5a6577" stroke-width="1.5" opacity=".6"/>
+        <line x1="56" y1="576" x2="300" y2="576" stroke="#7d8aa3" stroke-width="3"/>
+        <line x1="388" y1="576" x2="456" y2="576" stroke="#7d8aa3" stroke-width="3"/>
+        <!-- Left + right rails (vertical sides) -->
+        <line x1="58" y1="250" x2="58" y2="576" stroke="#7d8aa3" stroke-width="3"/>
+        <line x1="454" y1="250" x2="454" y2="500" stroke="#7d8aa3" stroke-width="3"/>
+
+        <!-- Fence posts (vertical) -->
+        <g fill="#5a6577" stroke="#3a4258" stroke-width="1">
+          <rect x="55" y="248" width="6" height="330"/>
+          <rect x="150" y="248" width="5" height="330" opacity=".7"/>
+          <rect x="250" y="248" width="5" height="330" opacity=".7"/>
+          <rect x="451" y="248" width="6" height="254"/>
+        </g>
+
+        <!-- GATE (two posts at the opening) -->
+        <rect x="296" y="498" width="8" height="80" fill="#7d8aa3" stroke="#3a4258" stroke-width="1"/>
+        <rect x="384" y="498" width="8" height="80" fill="#7d8aa3" stroke="#3a4258" stroke-width="1"/>
+        <!-- Gate top bar -->
+        <rect x="296" y="498" width="96" height="6" fill="#5a6577"/>
+        <!-- Open gate leaf (swung inward) -->
+        <g opacity=".7">
+          <line x1="304" y1="502" x2="340" y2="540" stroke="#8a97ad" stroke-width="2"/>
+          <rect x="304" y="502" width="40" height="40" fill="url(#chainlink)" opacity=".3" transform="rotate(28 304 502)"/>
+        </g>
+        <!-- Gate label -->
+        <text class="label-sm" x="344" y="595" text-anchor="middle" font-size="13" fill="var(--accent)">🚪 ประตูรั้ว (Gate)</text>
+
+        <!-- ESD STOP button mounted on the RIGHT gate post -->
+        <g transform="translate(392, 508)">
+          <rect x="-2" y="0" width="32" height="44" rx="4" fill="#252e44" stroke="#3a4a6e" stroke-width="1.5"/>
+          <circle cx="14" cy="15" r="13" fill="var(--hot)" stroke="#5a1015" stroke-width="2" class="pulse"/>
+          <text x="14" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">STOP</text>
+          <text class="label-sm" x="14" y="40" text-anchor="middle" font-size="9" fill="var(--hot)">ESD</text>
+        </g>
+      </g>
+
       <!-- ====================== TANK TRUCK (cab on RIGHT, faces right = direction of motion) ====================== -->
       <g id="ovTruck" transform="translate(-300, 600)">
         <!-- Shadow -->
@@ -413,10 +459,6 @@
       <!-- Pump discharge → Carousel overhead manifold — exits volute at viewBox (683, 498) -->
       <path d="M 683 498 L 683 470 L 800 470 L 800 380 L 840 380" stroke="url(#pipeG)" stroke-width="13" fill="none" stroke-linecap="round"/>
       <path d="M 683 498 L 683 470 L 800 470 L 800 380 L 840 380" stroke="#5ac8fa" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="14 10" class="flow" opacity=".8"/>
-
-      <!-- Compressor vapor return pipe (to Tank-B top) — aligned with new inlet at viewBox (533, 320) -->
-      <path d="M 533 320 L 533 285 L 380 285 L 380 320" stroke="url(#pipeG)" stroke-width="8" fill="none" stroke-linecap="round"/>
-      <path d="M 533 320 L 533 285 L 380 285 L 380 320" stroke="var(--vapor)" stroke-width="3" fill="none" stroke-linecap="round" stroke-dasharray="6 12" class="flow-vapor" opacity=".7"/>
 
       <!-- ====================== CENTRIFUGAL PUMP (realistic Corken/Blackmer-style) ======================
            Layout: Suction (left) → Volute casing with impeller cutaway → Coupling guard → Motor → Baseplate
@@ -559,170 +601,6 @@
         <text class="label-sm" x="50" y="-8" text-anchor="middle" font-size="12" opacity=".8">Centrifugal Pump</text>
       </g>
 
-      <!-- ====================== VAPOR COMPRESSOR (realistic Corken-style reciprocating) ======================
-           Layout (left → right): Electric Motor (with cooling fins) → Belt Drive (guard + 2 pulleys + V-belt)
-           → Compressor Cylinder (vertical, with finned head + pressure gauge) → Skid base
-           Animations: 2 pulleys spinning at different rates, gauge needle pulsates (vibration of running unit) -->
-      <g class="hot-zone" data-eq="compressor" transform="translate(440, 320)">
-        <rect class="hover-ring" x="-10" y="-10" width="140" height="120" rx="8" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 5"/>
-
-        <g filter="url(#softShadow)">
-          <!-- ════════ SKID BASE ════════ -->
-          <rect x="0" y="80" width="120" height="14" rx="1" fill="#3a4258" stroke="#1a1d2a" stroke-width="1.2"/>
-          <rect x="0" y="87" width="120" height="7" fill="#1a1d2a"/>
-          <!-- Mounting feet bolted to ground -->
-          <rect x="6" y="91" width="7" height="5" fill="#0a0a14"/>
-          <rect x="50" y="91" width="7" height="5" fill="#0a0a14"/>
-          <rect x="107" y="91" width="7" height="5" fill="#0a0a14"/>
-
-          <!-- ════════ ELECTRIC MOTOR (left) ════════ -->
-          <!-- End cap (left, fan housing) -->
-          <rect x="0" y="42" width="3" height="38" fill="#1a4a78" stroke="#0a1322" stroke-width=".5"/>
-          <!-- Motor body -->
-          <rect x="3" y="40" width="32" height="40" rx="3" fill="#2a5fa0" stroke="#0a1322" stroke-width="1"/>
-          <!-- Cooling fins (vertical strips along motor body) -->
-          <g stroke="#0a1322" stroke-width=".7" opacity=".7">
-            <line x1="6"  y1="44" x2="6"  y2="76"/>
-            <line x1="9"  y1="44" x2="9"  y2="76"/>
-            <line x1="12" y1="44" x2="12" y2="76"/>
-            <line x1="15" y1="44" x2="15" y2="76"/>
-            <line x1="18" y1="44" x2="18" y2="76"/>
-            <line x1="21" y1="44" x2="21" y2="76"/>
-            <line x1="24" y1="44" x2="24" y2="76"/>
-            <line x1="27" y1="44" x2="27" y2="76"/>
-            <line x1="30" y1="44" x2="30" y2="76"/>
-            <line x1="33" y1="44" x2="33" y2="76"/>
-          </g>
-          <!-- Motor nameplate -->
-          <rect x="6" y="56" width="26" height="8" rx="1" fill="#0a1322" stroke="#3a4258" stroke-width=".4"/>
-          <text x="19" y="62" text-anchor="middle" font-size="6" fill="var(--liquid)" font-family="Consolas,monospace">7.5 kW</text>
-          <text x="19" y="68" text-anchor="middle" font-size="4.5" fill="var(--liquid)" opacity=".7" font-family="Consolas,monospace">1450 rpm</text>
-          <!-- Motor mount feet -->
-          <rect x="4" y="78" width="5" height="4" fill="#0a0a14"/>
-          <rect x="29" y="78" width="5" height="4" fill="#0a0a14"/>
-          <!-- Shaft exiting motor -->
-          <rect x="35" y="59" width="6" height="4" fill="#5a6577"/>
-
-          <!-- ════════ BELT DRIVE (middle) ════════ -->
-          <!-- Belt guard (mesh enclosure) -->
-          <rect x="38" y="42" width="32" height="38" rx="3" fill="#252e44" stroke="#3a4a6e" stroke-width="1.2"/>
-          <!-- Guard mesh pattern -->
-          <g stroke="#3a4a6e" stroke-width=".4" opacity=".5">
-            <line x1="38" y1="50" x2="70" y2="50"/>
-            <line x1="38" y1="58" x2="70" y2="58"/>
-            <line x1="38" y1="66" x2="70" y2="66"/>
-            <line x1="38" y1="74" x2="70" y2="74"/>
-            <line x1="44" y1="42" x2="44" y2="80"/>
-            <line x1="50" y1="42" x2="50" y2="80"/>
-            <line x1="56" y1="42" x2="56" y2="80"/>
-            <line x1="62" y1="42" x2="62" y2="80"/>
-            <line x1="68" y1="42" x2="68" y2="80"/>
-          </g>
-          <!-- Yellow safety stripe on guard -->
-          <rect x="38" y="42" width="32" height="3" fill="#ffce39" stroke="#1a0f00" stroke-width=".4"/>
-
-          <!-- Small motor pulley (left, fast spinning) -->
-          <circle cx="42" cy="61" r="5" fill="#0a1322" stroke="#3a4258" stroke-width=".6"/>
-          <g transform="translate(42,61)">
-            <g style="transform-box:fill-box;transform-origin:center" class="spin-comp">
-              <circle r="4" fill="#3a4258"/>
-              <line x1="-4" y1="0" x2="4" y2="0" stroke="#a8b3c8" stroke-width=".8"/>
-              <line x1="0" y1="-4" x2="0" y2="4" stroke="#a8b3c8" stroke-width=".8"/>
-              <circle r="1" fill="#1a0f00"/>
-            </g>
-          </g>
-
-          <!-- Large compressor pulley (right, slower) -->
-          <circle cx="62" cy="61" r="9" fill="#0a1322" stroke="#3a4258" stroke-width=".8"/>
-          <g transform="translate(62,61)">
-            <g style="transform-box:fill-box;transform-origin:center" class="spin-fan">
-              <circle r="7" fill="#3a4258"/>
-              <line x1="-7" y1="0" x2="7" y2="0" stroke="#a8b3c8" stroke-width="1.2"/>
-              <line x1="0" y1="-7" x2="0" y2="7" stroke="#a8b3c8" stroke-width="1.2"/>
-              <line x1="-5" y1="-5" x2="5" y2="5" stroke="#a8b3c8" stroke-width=".8" opacity=".6"/>
-              <line x1="-5" y1="5"  x2="5" y2="-5" stroke="#a8b3c8" stroke-width=".8" opacity=".6"/>
-              <circle r="1.6" fill="#1a0f00"/>
-            </g>
-          </g>
-
-          <!-- V-belt connecting pulleys (top + bottom strands) -->
-          <path d="M 42 56 L 62 52" stroke="#0a0a14" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-          <path d="M 42 66 L 62 70" stroke="#0a0a14" stroke-width="2.2" fill="none" stroke-linecap="round"/>
-
-          <!-- ════════ COMPRESSOR CYLINDER (right, vertical with finned head) ════════ -->
-          <!-- Cylinder body -->
-          <rect x="76" y="30" width="32" height="50" rx="3" fill="#1a4a78" stroke="#0a1322" stroke-width="1.2"/>
-          <!-- Cooling fins (horizontal across cylinder) -->
-          <g stroke="#0a1322" stroke-width=".7">
-            <line x1="74" y1="34" x2="110" y2="34"/>
-            <line x1="74" y1="38" x2="110" y2="38"/>
-            <line x1="74" y1="42" x2="110" y2="42"/>
-            <line x1="74" y1="46" x2="110" y2="46"/>
-            <line x1="74" y1="50" x2="110" y2="50"/>
-            <line x1="74" y1="54" x2="110" y2="54"/>
-            <line x1="74" y1="58" x2="110" y2="58"/>
-            <line x1="74" y1="62" x2="110" y2="62"/>
-            <line x1="74" y1="66" x2="110" y2="66"/>
-            <line x1="74" y1="70" x2="110" y2="70"/>
-            <line x1="74" y1="74" x2="110" y2="74"/>
-          </g>
-          <!-- Highlight strip (3D appearance) -->
-          <rect x="78" y="30" width="3" height="48" fill="#5ac8fa" opacity=".25"/>
-          <!-- Cylinder head (top, with bolt pattern) -->
-          <rect x="74" y="22" width="36" height="10" rx="2" fill="#252e44" stroke="#0a1322" stroke-width="1"/>
-          <!-- Bolt heads on cylinder head -->
-          <g fill="#0a0a14">
-            <circle cx="78" cy="27" r="1.2"/>
-            <circle cx="86" cy="27" r="1.2"/>
-            <circle cx="98" cy="27" r="1.2"/>
-            <circle cx="106" cy="27" r="1.2"/>
-          </g>
-          <!-- Valve cover/boss on top -->
-          <rect x="86" y="17" width="14" height="6" rx="1" fill="#3a4258" stroke="#0a1322" stroke-width=".5"/>
-
-          <!-- ════════ PRESSURE GAUGE (on cylinder head, vibrating) ════════ -->
-          <g transform="translate(93, 13)">
-            <circle r="6" fill="#fff" stroke="#0a1322" stroke-width="1.2"/>
-            <circle r="5" fill="#fff"/>
-            <!-- Tick marks -->
-            <g stroke="#1a0f00" stroke-width=".4">
-              <line x1="-3.5" y1="-2" x2="-4" y2="-2.5"/>
-              <line x1="-2" y1="-4" x2="-2.5" y2="-4.5"/>
-              <line x1="0" y1="-4.5" x2="0" y2="-5"/>
-              <line x1="2" y1="-4" x2="2.5" y2="-4.5"/>
-              <line x1="3.5" y1="-2" x2="4" y2="-2.5"/>
-            </g>
-            <!-- Center pivot -->
-            <circle r=".8" fill="#1a0f00"/>
-            <!-- Needle — animated to vibrate (pressure pulsations from running compressor) -->
-            <line x1="0" y1="0" x2="3" y2="-3" stroke="#a82530" stroke-width="1.2" stroke-linecap="round">
-              <animate attributeName="x2" values="3;2.5;3.2;3;2.8;3;3.3;3" dur="0.4s" repeatCount="indefinite"/>
-              <animate attributeName="y2" values="-3;-3.4;-2.8;-3;-3.2;-3;-2.8;-3" dur="0.4s" repeatCount="indefinite"/>
-            </line>
-          </g>
-
-          <!-- ════════ INLET PIPE (top — vapor return from storage tank) ════════ -->
-          <rect x="89" y="0" width="8" height="22" fill="#7d8aa3" stroke="#1a1d2a" stroke-width=".7"/>
-          <rect x="85" y="0" width="16" height="4" rx="1" fill="#5a6577" stroke="#1a1d2a" stroke-width=".5"/>
-          <!-- "IN" arrow indicator -->
-          <polygon points="93,9 90,14 96,14" fill="var(--vapor)" opacity=".8"/>
-
-          <!-- ════════ OUTLET PIPE (bottom — compressed vapor going to tanker) ════════ -->
-          <rect x="76" y="80" width="36" height="4" fill="#7d8aa3" stroke="#1a1d2a" stroke-width=".5"/>
-          <rect x="108" y="78" width="4" height="14" fill="#7d8aa3" stroke="#1a1d2a" stroke-width=".5"/>
-
-          <!-- ════════ TITLE BAR + STATUS ════════ -->
-          <rect x="8" y="4" width="52" height="13" rx="2" fill="#0a1322" stroke="#3a4a6e" stroke-width=".6"/>
-          <text x="34" y="13" text-anchor="middle" class="label-num" font-size="10" fill="var(--liquid)">COMP-01</text>
-
-          <!-- Running indicator -->
-          <circle cx="48" cy="84" r="2.5" fill="var(--good)" class="pulse"/>
-          <text x="55" y="86" font-size="6.5" font-weight="700" fill="var(--good)" font-family="Consolas,monospace">RUN</text>
-        </g>
-
-        <text class="label-sm" x="60" y="110" text-anchor="middle">Vapor Compressor</text>
-        <text class="label-sm" x="60" y="125" text-anchor="middle" font-size="11" opacity=".7">Reciprocating Piston</text>
-      </g>
 
       <!-- ====================== CAROUSEL FILLING MACHINE (เน้นเป็นจุดเด่นกลางจอ) ====================== -->
       <!-- Detailed 8-station LPG filling carousel — modeled on real industrial design:
@@ -1055,22 +933,7 @@
         <text class="label-num" x="0" y="22" text-anchor="middle" font-size="13" fill="var(--good)">DET-3</text>
       </g>
 
-      <!-- ESD station -->
-      <g transform="translate(500,615)">
-        <rect x="-12" y="-10" width="54" height="60" rx="4" fill="#252e44" stroke="#3a4a6e"/>
-        <circle cx="15" cy="12" r="15" fill="var(--hot)" stroke="#5a1015" stroke-width="2" class="pulse"/>
-        <text x="15" y="16" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">STOP</text>
-        <text class="label-sm" x="15" y="44" text-anchor="middle">ESD</text>
-      </g>
-
-      <!-- Fire water monitor — moved to bullet tank yard (where the highest-risk asset is) -->
-      <g transform="translate(460,460)">
-        <rect x="-3" y="0" width="6" height="38" fill="#5a6577"/>
-        <rect x="-13" y="38" width="26" height="12" rx="2" fill="#a82530"/>
-        <rect x="-2" y="-9" width="14" height="10" fill="#a82530"/>
-        <text class="label-sm" x="0" y="62" text-anchor="middle" fill="#ff8a8a">Fire Monitor</text>
-      </g>
-
+      <!-- (ESD station relocated to the storage-yard fence gate — see #ovFence) -->
 
       <!-- ====================== SAFETY SIGN BOARD (ISO 7010 / มอก. 635-2554) ======================
            Compliant Thai safety signage for LPG bottling plants per กฎกระทรวง พ.ศ. 2564
@@ -1079,13 +942,9 @@
            - Mandatory (M001): blue circle, white icon
            - NFPA 704 included as supplementary international ID
        -->
-      <g transform="translate(20, 488)">
+      <g transform="translate(20, 500)">
         <!-- Mounting post -->
-        <rect x="32" y="0" width="6" height="220" fill="#5a6577" stroke="#1a1d2a"/>
-
-        <!-- Red title banner -->
-        <rect x="0" y="0" width="76" height="18" rx="2" fill="#a82530" stroke="#5a0d10" stroke-width="1.5"/>
-        <text x="38" y="13" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Sarabun,sans-serif">⚠ DANGER ZONE</text>
+        <rect x="32" y="0" width="6" height="210" fill="#5a6577" stroke="#1a1d2a"/>
 
         <!-- Sign 1: P002 ห้ามสูบบุหรี่ -->
         <g transform="translate(0, 22)">

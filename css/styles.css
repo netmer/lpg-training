@@ -69,65 +69,46 @@ body{display:flex;flex-direction:column;height:100vh}
 .icon-btn.on{background:rgba(255,61,87,.20);border-color:var(--hot);color:var(--hot)}
 
 /* ============================================================
-   STEP NAVIGATION BAR (second row of header)
+   PROCESS BANNER (7-step timeline at top of overview)
 ============================================================ */
-.step-nav{
-  display:flex;align-items:center;gap:5px;flex-wrap:wrap;
-  padding:6px 16px 8px;
-  background:rgba(8,14,28,.78);
+.process-banner{
+  display:flex;align-items:center;justify-content:center;gap:2px;flex-wrap:nowrap;
+  padding:8px 14px 10px;
+  background:rgba(8,14,28,.82);
   border-bottom:1px solid var(--line);
+  overflow-x:auto;
 }
-.step-tab{
-  border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--ink);
-  padding:6px 12px;border-radius:8px;cursor:pointer;font-family:inherit;
-  font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:4px;
-  transition:all .15s;line-height:1;white-space:nowrap;
+.process-step{
+  display:flex;align-items:center;gap:7px;
+  padding:5px 11px;border-radius:999px;
+  background:rgba(255,255,255,.03);border:1px solid var(--line);
+  white-space:nowrap;flex:0 0 auto;
+  transition:all .2s;
 }
-.step-tab:hover{background:rgba(255,179,71,.12);border-color:var(--accent);color:var(--accent)}
-.step-tab.active{
+.process-step:hover{
+  border-color:var(--accent);background:rgba(255,179,71,.10);
+}
+.process-step .num{
+  width:26px;height:26px;border-radius:50%;flex:0 0 26px;
   background:linear-gradient(135deg,var(--accent),var(--accent-2));
-  color:#1a0f00;border-color:transparent;
-  box-shadow:0 4px 12px rgba(255,122,69,.30);
+  color:#1a0f00;font-weight:800;font-size:14px;font-family:"Consolas",monospace;
+  display:grid;place-items:center;
+  box-shadow:0 2px 8px rgba(255,122,69,.35);
 }
-.step-tab.overview-tab{background:rgba(90,200,250,.12);border-color:rgba(90,200,250,.4);color:var(--liquid)}
-.step-tab.overview-tab.active{background:linear-gradient(135deg,#5ac8fa,#1a6ca8);color:#fff}
-.step-nav .sep{color:var(--muted);margin:0 2px}
+.process-step .label{
+  font-size:13.5px;font-weight:600;color:var(--ink);
+}
+.process-banner .flow-arrow{
+  color:var(--accent);font-size:18px;font-weight:800;flex:0 0 auto;margin:0 1px;opacity:.6;
+}
 
-/* ============================================================
-   BIG FLOATING PREV/NEXT ARROWS (always visible on stage edges)
-============================================================ */
-.nav-arrow{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:56px;height:80px;
-  background:linear-gradient(135deg,var(--accent),var(--accent-2));
-  color:#1a0f00;border:2px solid #1a0f00;
-  cursor:pointer;
-  font-size:30px;font-weight:800;font-family:"Sarabun",sans-serif;
-  border-radius:10px;
-  box-shadow:0 6px 22px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.3);
-  z-index:30;
-  display:flex;align-items:center;justify-content:center;
-  transition:all .15s;
-  opacity:.85;
+/* Compact the banner on narrow screens */
+@media (max-width:1100px){
+  .process-step{padding:4px 8px;gap:5px}
+  .process-step .num{width:22px;height:22px;flex:0 0 22px;font-size:12px}
+  .process-step .label{font-size:11.5px}
+  .process-banner .flow-arrow{font-size:14px}
 }
-.nav-arrow:hover{
-  opacity:1;
-  transform:translateY(-50%) scale(1.08);
-  box-shadow:0 10px 30px rgba(255,122,69,.5), inset 0 1px 0 rgba(255,255,255,.3);
-}
-.nav-arrow:active{
-  transform:translateY(-50%) scale(0.96);
-}
-.nav-arrow:disabled{
-  background:rgba(120,120,120,.4);color:rgba(255,255,255,.3);
-  cursor:not-allowed;opacity:.3;border-color:#3a4258;
-  box-shadow:none;
-}
-.nav-arrow:disabled:hover{transform:translateY(-50%);opacity:.3}
-.nav-prev{left:18px}
-.nav-prev::after{content:'';display:block;font-size:11px;font-weight:700;margin-top:-4px;letter-spacing:.5px}
-.nav-next{right:18px}
-.nav-next::after{content:'';display:block;font-size:11px;font-weight:700;margin-top:-4px;letter-spacing:.5px}
 
 /* ============================================================
    MAIN STAGE — fills remaining viewport
