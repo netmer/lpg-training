@@ -143,6 +143,11 @@ body{display:flex;flex-direction:column;height:100vh}
 .flow-slow {stroke-dasharray:14 10;animation:flow-dash 2.4s linear infinite}
 .flow-rev  {stroke-dasharray:14 10;animation:flow-dash 1.6s linear infinite reverse}
 .flow-vapor{stroke-dasharray:6  12;animation:flow-dash 2s   linear infinite}
+@keyframes water-fall{to{stroke-dashoffset:-48}}
+.water-stream{stroke-dasharray:4 7;animation:water-fall .55s linear infinite}
+.spray-jet{stroke-dasharray:3 6;animation:water-fall .45s linear infinite}
+@keyframes spray-shimmer{0%,100%{opacity:.95}50%{opacity:.6}}
+.spray-cone{animation:spray-shimmer 1.3s ease-in-out infinite}
 
 @keyframes cloud-drift{from{transform:translateX(-220px)}to{transform:translateX(2200px)}}
 .cloud-a{animation:cloud-drift 60s linear infinite}

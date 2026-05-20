@@ -233,6 +233,12 @@
           <stop offset="62%"  stop-color="#c5232a"/>
           <stop offset="100%" stop-color="#6e1116"/>
         </linearGradient>
+        <!-- Sprinkler spray mist (fan of fine droplets, fades downward) -->
+        <linearGradient id="sprayG" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0"    stop-color="#d4f0ff" stop-opacity=".62"/>
+          <stop offset="55%"  stop-color="#8fdcff" stop-opacity=".26"/>
+          <stop offset="100%" stop-color="#7ad8ff" stop-opacity="0"/>
+        </linearGradient>
         <!-- Process-topic number badge -->
         <linearGradient id="badgeG" x1="0" y1="0" x2="1" y2="1">
           <stop offset="0" stop-color="#ffb347"/>
@@ -295,10 +301,6 @@
           <rect x="320" y="366" width="22" height="32" fill="#5a6577"/>
           <line x1="120" y1="298" x2="380" y2="298" stroke="#fff" opacity=".25"/>
           <line x1="120" y1="342" x2="380" y2="342" stroke="#fff" opacity=".25"/>
-          <!-- PSV -->
-          <rect x="243" y="260" width="14" height="20" fill="#a82530"/>
-          <rect x="237" y="248" width="26" height="14" rx="3" fill="#3a4258"/>
-          <circle cx="250" cy="245" r="3.5" fill="#ffae3d" class="beacon"/>
           <!-- (level gauge removed — decluttered) -->
         </g>
 
@@ -311,10 +313,38 @@
           <rect x="340" y="480" width="24" height="34" fill="#5a6577"/>
           <line x1="120" y1="406" x2="400" y2="406" stroke="#fff" opacity=".25"/>
           <line x1="120" y1="454" x2="400" y2="454" stroke="#fff" opacity=".25"/>
-          <rect x="253" y="366" width="14" height="20" fill="#a82530"/>
-          <rect x="247" y="354" width="26" height="14" rx="3" fill="#3a4258"/>
-          <circle cx="260" cy="351" r="3.5" fill="#ffae3d" class="beacon"/>
           <!-- (level gauge removed — decluttered) -->
+        </g>
+
+        <!-- ====================== SPRINKLER WATER-DELUGE COOLING — realistic spray over the tanks ======================
+             Deluge sprinkler heads on a header spray fans of fine water down over the bullet tanks
+             (skin cooling / anti-BLEVE): translucent cone = mist, bright jets = animated spray, lower lines = water film. -->
+        <g id="ovCooling">
+          <!-- Tank-A header + 4 sprinkler heads -->
+          <rect x="122" y="266" width="258" height="4" rx="2" fill="url(#pipeG)"/>
+          ${[150,210,290,350].map(nx => `
+          <rect x="${nx-2.5}" y="269" width="5" height="6" rx="1" fill="#7d8aa3" stroke="#3a4258" stroke-width=".4"/>
+          <polygon points="${nx},275 ${nx-20},346 ${nx+20},346" fill="url(#sprayG)" class="spray-cone"/>
+          <g stroke="#aee6ff" stroke-width="1.3" stroke-linecap="round">
+            <line class="spray-jet" x1="${nx}" y1="276" x2="${nx-18}" y2="344"/>
+            <line class="spray-jet" x1="${nx}" y1="276" x2="${nx-6}"  y2="346"/>
+            <line class="spray-jet" x1="${nx}" y1="276" x2="${nx+6}"  y2="346"/>
+            <line class="spray-jet" x1="${nx}" y1="276" x2="${nx+18}" y2="344"/>
+          </g>`).join('')}
+          <g stroke="#7ad8ff" stroke-width="1.4" stroke-linecap="round" opacity=".55">${[150,210,290,350].map(x=>`<line class="water-stream" x1="${x}" y1="346" x2="${x}" y2="363"/>`).join('')}</g>
+
+          <!-- Tank-B header + 4 sprinkler heads -->
+          <rect x="122" y="372" width="278" height="4" rx="2" fill="url(#pipeG)"/>
+          ${[150,210,300,360].map(nx => `
+          <rect x="${nx-2.5}" y="375" width="5" height="6" rx="1" fill="#7d8aa3" stroke="#3a4258" stroke-width=".4"/>
+          <polygon points="${nx},381 ${nx-21},454 ${nx+21},454" fill="url(#sprayG)" class="spray-cone"/>
+          <g stroke="#aee6ff" stroke-width="1.3" stroke-linecap="round">
+            <line class="spray-jet" x1="${nx}" y1="382" x2="${nx-19}" y2="452"/>
+            <line class="spray-jet" x1="${nx}" y1="382" x2="${nx-6}"  y2="454"/>
+            <line class="spray-jet" x1="${nx}" y1="382" x2="${nx+6}"  y2="454"/>
+            <line class="spray-jet" x1="${nx}" y1="382" x2="${nx+19}" y2="452"/>
+          </g>`).join('')}
+          <g stroke="#7ad8ff" stroke-width="1.4" stroke-linecap="round" opacity=".55">${[150,210,300,360].map(x=>`<line class="water-stream" x1="${x}" y1="454" x2="${x}" y2="477"/>`).join('')}</g>
         </g>
 
       </g>
@@ -325,8 +355,8 @@
       <g id="ovFence">
         <!-- ===== chain-link diamond mesh panels (galvanized, semi-transparent) =====
              Left panel x60→296 · Right panel x388→454 · gate opening between -->
-        <rect x="60"  y="256" width="236" height="308" fill="url(#meshWire)" opacity=".5"/>
-        <rect x="388" y="256" width="66"  height="308" fill="url(#meshWire)" opacity=".5"/>
+        <rect x="60"  y="256" width="236" height="308" fill="url(#meshWire)" opacity=".4"/>
+        <rect x="388" y="256" width="66"  height="308" fill="url(#meshWire)" opacity=".4"/>
         <rect x="60"  y="256" width="236" height="308" fill="none" stroke="#5a6577" stroke-width="1" opacity=".3"/>
         <rect x="388" y="256" width="66"  height="308" fill="none" stroke="#5a6577" stroke-width="1" opacity=".3"/>
 
@@ -339,21 +369,21 @@
 
         <!-- ===== posts (galvanized pipe, cylindrical) with domed caps ===== -->
         <g stroke="#1f2c46" stroke-width=".5">
-          <rect x="55"  y="246" width="10" height="320" rx="3.5" fill="url(#fencePost)"/>
-          <rect x="154" y="246" width="9"  height="320" rx="3"   fill="url(#fencePost)"/>
-          <rect x="254" y="246" width="9"  height="320" rx="3"   fill="url(#fencePost)"/>
-          <rect x="449" y="246" width="10" height="320" rx="3.5" fill="url(#fencePost)"/>
-          <!-- gate terminal posts (thicker) -->
-          <rect x="289" y="244" width="13" height="322" rx="3.5" fill="url(#fencePost)"/>
-          <rect x="385" y="244" width="13" height="322" rx="3.5" fill="url(#fencePost)"/>
+          <rect x="57"  y="246" width="6" height="320" rx="3" fill="url(#fencePost)"/>
+          <rect x="155" y="246" width="6" height="320" rx="3" fill="url(#fencePost)"/>
+          <rect x="255" y="246" width="6" height="320" rx="3" fill="url(#fencePost)"/>
+          <rect x="451" y="246" width="6" height="320" rx="3" fill="url(#fencePost)"/>
+          <!-- gate terminal posts (a touch sturdier) -->
+          <rect x="291" y="244" width="9" height="322" rx="3" fill="url(#fencePost)"/>
+          <rect x="387" y="244" width="9" height="322" rx="3" fill="url(#fencePost)"/>
         </g>
         <g fill="#e7ecf4" stroke="#2a3142" stroke-width=".5">
-          <ellipse cx="60"  cy="246" rx="6.5" ry="3"/>
-          <ellipse cx="158" cy="246" rx="6"   ry="2.6"/>
-          <ellipse cx="258" cy="246" rx="6"   ry="2.6"/>
-          <ellipse cx="454" cy="246" rx="6.5" ry="3"/>
-          <ellipse cx="295" cy="244" rx="8"   ry="3.2"/>
-          <ellipse cx="391" cy="244" rx="8"   ry="3.2"/>
+          <ellipse cx="60"  cy="246" rx="4"   ry="2.2"/>
+          <ellipse cx="158" cy="246" rx="4"   ry="2.2"/>
+          <ellipse cx="258" cy="246" rx="4"   ry="2.2"/>
+          <ellipse cx="454" cy="246" rx="4"   ry="2.2"/>
+          <ellipse cx="295" cy="244" rx="5.5" ry="2.6"/>
+          <ellipse cx="391" cy="244" rx="5.5" ry="2.6"/>
         </g>
 
         <!-- ===== EMERGENCY STATION — valve sign + ESD STOP button combined into one point by the gate ===== -->
@@ -368,7 +398,7 @@
             <rect x="-2" y="0" width="32" height="44" rx="4" fill="#252e44" stroke="#3a4a6e" stroke-width="1.5"/>
             <circle cx="14" cy="15" r="13" fill="var(--hot)" stroke="#5a1015" stroke-width="2" class="pulse"/>
             <text x="14" y="19" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">STOP</text>
-            <text class="label-sm" x="14" y="40" text-anchor="middle" font-size="9" fill="var(--hot)"></text>
+            <text class="label-sm" x="14" y="40" text-anchor="middle" font-size="9" fill="var(--hot)">ESD</text>
           </g>
         </g>
 
@@ -399,6 +429,8 @@
           <rect x="-7" y="40" width="14" height="8" fill="url(#bollardR)"/>
         </g>`).join('')}
 
+        <!-- Water-cooling system label (drawn on top of the mesh so it reads clearly) -->
+        <text class="label-sm" x="152" y="268" text-anchor="middle" font-size="12" fill="#bfe8ff">💧 ระบบน้ำลดอุณหภูมิถัง</text>
       </g>
 
       <!-- ====================== TANK TRUCK (cab on RIGHT, faces right = direction of motion) ====================== -->
@@ -734,7 +766,7 @@
         </g>
 
         <!-- LABEL (carousel title — Thai only, decluttered) -->
-        <text class="label" x="0" y="166" text-anchor="middle" fill="var(--accent)" font-size="20">เครื่องบรรจุก๊าซแบบหมุนวน</text>
+        <text class="label" x="0" y="166" text-anchor="middle" fill="var(--accent)" font-size="20">เครื่องบรรจุก๊าซ</text>
       </g>
 
       <!-- ====================== CONVEYOR (LEFT-TO-RIGHT) ====================== -->
